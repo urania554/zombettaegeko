@@ -3,7 +3,7 @@
 import os
 import os
 OUT = os.path.dirname(os.path.abspath(__file__))
-SITE = 'https://zombettaegeko.netlify.app'
+SITE = 'https://zombettaegeko.it'
 # Negozio: False = solo prenotazioni via email/Instagram; True = Stripe + modulo + condizioni di vendita
 NEGOZIO_ATTIVO = False
 EMAIL = 'zombettaegeko@gmail.com'
