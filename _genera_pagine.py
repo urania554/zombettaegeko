@@ -284,7 +284,7 @@ page('canzone.html', 'La canzone di Zombetta e Geko – con testo', 'La canzone 
 
 # ------------------------------------------------------------------ NEGOZIO
 # Dati del negozio: completare prima della pubblicazione
-NEG = dict(prezzo='9,90', spedizione='4,99', stripe='',   # link Payment Link di Stripe
+NEG = dict(prezzo='9,90', spedizione='4,99', stripe='https://buy.stripe.com/9B68wP8tjdfOc9KcligIo00',   # link Payment Link di Stripe
            venditore='Cinzia Molisano', email='zombettaegeko@gmail.com', indirizzo='')
 taglie = ['2 anni', '4 anni', '6 anni', '8 anni', '10 anni']
 colori = [('bianco', '#ffffff'), ('celeste', '#a9d4f5'), ('rosa', '#f6a6cf'), ('giallo', '#ffe45c')]
