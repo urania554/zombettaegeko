@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giochi di Zombetta e Geko – memory, puzzle e quiz</title>
+<meta name="description" content="Giochi gratuiti per bambini con Zombetta e Geko: memory, puzzle e quiz.">
+<meta property="og:title" content="Giochi di Zombetta e Geko – memory, puzzle e quiz">
+<meta property="og:description" content="Giochi gratuiti per bambini con Zombetta e Geko: memory, puzzle e quiz.">
+<meta property="og:image" content="https://zombettaegeko.netlify.app/img/og.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/favicon.png">
+<link rel="preload" href="fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Zombetta e Geko, home"><img src="img/logo.webp" alt="Zombetta e Geko" width="160" height="58"></a>
+    <button class="burger" aria-label="Apri il menu" aria-expanded="false">☰</button>
+    <nav><ul class="menu">
+<li><a href="index.html">Home</a></li>
+<li><a href="libri.html">Libri</a></li>
+<li><a href="video.html">Cartoni</a></li>
+<li><a href="canzone.html">Canzone</a></li>
+<li><a href="giochi.html" aria-current=page>Giochi</a></li>
+<li><a href="negozio.html">Magliette</a></li>
+    </ul></nav>
+  </div>
+</header>
+<main>
+
+<section class="pagina-testa"><div class="wrap">
+  <h1>Giochi</h1>
+  <p>Allena la memoria, ricomponi le avventure e scopri quanto conosci Zombetta e Geko!</p>
+</div></section>
+<section class="sez" style="padding-top:20px"><div class="wrap">
+  <div class="giochi-menu">
+    <button class="btn" data-gioco="memory">🃏 Memory</button>
+    <button class="btn" data-gioco="puzzle">🧩 Puzzle</button>
+    <button class="btn" data-gioco="quiz">❓ Quiz</button>
+  </div>
+
+  <div class="gioco" id="memory">
+    <h2 style="text-align:center">Memory del viaggio</h2>
+    <div class="barra"><span>Mosse: <span id="memory-mosse">0</span> · Coppie: <span id="memory-coppie">0</span>/8</span><button class="btn piccolo" id="memory-nuovo">Nuova partita</button></div>
+    <div class="memory" id="memory-griglia"></div>
+    <p class="bravo" id="memory-bravo"></p>
+  </div>
+
+  <div class="gioco" id="puzzle">
+    <h2 style="text-align:center">Il puzzle di Zombetta</h2>
+    <p style="text-align:center">Tocca due pezzi per scambiarli e ricomponi l'immagine.</p>
+    <div class="barra">
+      <label>Immagine
+        <select id="puzzle-immagine">
+          <option value="img/prato.webp">Nel prato</option>
+          <option value="img/viaggio.webp">In viaggio</option>
+          <option value="img/valigia.webp">La valigia magica</option>
+          <option value="img/mappa.webp">Geko e la mappa</option>
+          <option value="img/muri.webp">Geko investigatore</option>
+        </select></label>
+      <label>Pezzi
+        <select id="puzzle-livello"><option value="3">9 (facile)</option><option value="4">16 (medio)</option><option value="5">25 (difficile)</option></select></label>
+      <span>Mosse: <span id="puzzle-mosse">0</span></span>
+      <button class="btn piccolo" id="puzzle-nuovo">Mescola</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 140px;gap:20px;align-items:start" class="puzzle-area">
+      <div class="puzzle" id="puzzle-griglia"></div>
+      <div><p style="font-weight:800;margin-bottom:6px">Modello</p><img id="puzzle-anteprima" alt="Immagine da ricomporre" style="border:3px solid var(--viola-scuro);border-radius:12px"></div>
+    </div>
+    <p class="bravo" id="puzzle-bravo"></p>
+  </div>
+
+  <div class="gioco" id="quiz">
+    <h2 style="text-align:center">Quanto conosci Zombetta e Geko?</h2>
+    <div id="quiz-box"></div>
+  </div>
+</div></section>
+<style>@media (max-width:600px){.puzzle-area{grid-template-columns:1fr!important}.puzzle-area img{max-width:140px}.memory{gap:8px}}</style>
+
+</main>
+<footer>
+  <div class="wrap">
+    <div>
+      <img src="img/logo.webp" alt="" width="200" style="margin-bottom:12px">
+      <p>Una bambina zombie, un geco e una valigia piena di misteri. Storie da leggere e guardare insieme, per bambini dai 5 agli 8 anni.</p>
+    </div>
+    <div>
+      <h3>Segui le avventure</h3>
+      <ul>
+        <li><a href="https://www.youtube.com/@ZombettaGeko" rel="noopener">YouTube</a></li>
+        <li><a href="https://www.instagram.com/zombettaegeko/" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.tiktok.com/@zombettaegeko" rel="noopener">TikTok</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>L'autrice</h3>
+      <p>Le storie di Zombetta e Geko sono di Cinzia Molisano.<br><a href="https://cinziamolisano.it" rel="noopener">cinziamolisano.it</a></p>
+    </div>
+    <p class="piccolo">© <span class="anno">2026</span> Cinzia Molisano · Zombetta e Geko · Questo sito non usa cookie. · <a href="condizioni.html">Condizioni di vendita</a> · <a href="privacy.html">Privacy</a></p>
+  </div>
+</footer>
+<script src="site.js"></script>
+<script src="giochi.js"></script>
+</body>
+</html>
