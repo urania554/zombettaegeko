@@ -4,6 +4,10 @@ import os
 import os
 OUT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://zombettaegeko.netlify.app'
+# Negozio: False = solo prenotazioni via email/Instagram; True = Stripe + modulo + condizioni di vendita
+NEGOZIO_ATTIVO = False
+EMAIL = 'zombettaegeko@gmail.com'
+COND_LINK = '· <a href="condizioni.html">Condizioni di vendita</a> ' if NEGOZIO_ATTIVO else ''
 
 YT = 'https://www.youtube.com/@ZombettaGeko'
 IG = 'https://www.instagram.com/zombettaegeko/'
@@ -64,7 +68,7 @@ def page(fname, title, desc, body, extra_js=''):
       <h3>L'autrice</h3>
       <p>Le storie di Zombetta e Geko sono di Cinzia Molisano.<br><a href="https://cinziamolisano.it" rel="noopener">cinziamolisano.it</a></p>
     </div>
-    <p class="piccolo">© <span class="anno">2026</span> Cinzia Molisano · Zombetta e Geko · Questo sito non usa cookie. · <a href="condizioni.html">Condizioni di vendita</a> · <a href="privacy.html">Privacy</a></p>
+    <p class="piccolo">© <span class="anno">2026</span> Cinzia Molisano · Zombetta e Geko · Questo sito non usa cookie. {COND_LINK}· <a href="mailto:{EMAIL}">{EMAIL}</a> · <a href="privacy.html">Privacy</a></p>
   </div>
 </footer>
 <script src="site.js"></script>
@@ -378,7 +382,7 @@ function calcola() {
 }
 document.querySelector('.modulo').addEventListener('input', calcola); calcola();
 </script>''' % (NEG["prezzo"].replace(",", "."), NEG["spedizione"].replace(",", "."))
-page('negozio.html', 'La maglietta del Club di Zombetta e Geko', 'Le magliette per bambini del Club degli amici di Zombetta: bollino sul cuore e il giro del mondo sul retro.', negozio, NEG_JS)
+if NEGOZIO_ATTIVO: page('negozio.html', 'La maglietta del Club di Zombetta e Geko', 'Le magliette per bambini del Club degli amici di Zombetta: bollino sul cuore e il giro del mondo sul retro.', negozio, NEG_JS)
 
 grazie = f'''
 <section class="sez"><div class="wrap"><div class="avviso">
@@ -388,9 +392,9 @@ grazie = f'''
   <a class="btn" href="index.html">Torna alla home</a>
 </div></div></section>
 '''
-page('grazie.html', 'Ordine ricevuto – Zombetta e Geko', 'Grazie per il tuo ordine.', grazie)
+if NEGOZIO_ATTIVO: page('grazie.html', 'Ordine ricevuto – Zombetta e Geko', 'Grazie per il tuo ordine.', grazie)
 
-V = NEG['venditore']; E = NEG['email'] or '[EMAIL]'; IND = NEG['indirizzo'] or '[INDIRIZZO]'
+V = NEG['venditore']; E = NEG['email'] or EMAIL; IND = NEG['indirizzo'] or '[INDIRIZZO]'
 condizioni = f'''
 <section class="sez legale"><div class="wrap" style="max-width:820px">
 <h1>Condizioni di vendita</h1>
@@ -414,22 +418,21 @@ condizioni = f'''
 <p>Per qualsiasi problema scrivi a {E}. Al contratto si applica la legge italiana; per i consumatori è competente il foro del luogo di residenza o domicilio.</p>
 </div></section>
 '''
-page('condizioni.html', 'Condizioni di vendita – Zombetta e Geko', 'Condizioni di vendita delle magliette di Zombetta e Geko.', condizioni)
+if NEGOZIO_ATTIVO: page('condizioni.html', 'Condizioni di vendita – Zombetta e Geko', 'Condizioni di vendita delle magliette di Zombetta e Geko.', condizioni)
 
+PRIV_ORD = ("""<p><b>Ordini:</b> nome, email, indirizzo e dettagli dell'ordine servono solo a gestire l'acquisto e la spedizione (base giuridica: esecuzione del contratto) e a rispettare gli obblighi fiscali (obbligo di legge). I pagamenti con carta sono gestiti da Stripe, che tratta i dati di pagamento come titolare autonomo.</p>""" if NEGOZIO_ATTIVO else '<p><b>Contatti e prenotazioni:</b> se ci scrivi via email o su Instagram (per esempio per prenotare una maglietta), usiamo il tuo nome e i tuoi contatti solo per risponderti e non li comunichiamo a nessuno. Li cancelliamo quando non servono più, o prima se ce lo chiedi.</p>')
+PRIV_DEST = ('<h2>A chi vengono comunicati</h2>\n<p>Netlify (ricezione dei moduli e hosting), Stripe (pagamenti con carta), InPost (spedizione: nome, cellulare ed email per la consegna al Locker). I dati non vengono venduti né usati per pubblicità.</p>\n<h2>Quanto vengono conservati</h2>\n<p>Per il tempo necessario a gestire l\'ordine e, per i dati richiesti dalla legge fiscale, per 10 anni.</p>' if NEGOZIO_ATTIVO else '<h2>A chi vengono comunicati</h2>\n<p>A nessuno. Il sito è ospitato da Netlify, che tratta solo i dati tecnici di navigazione. I dati non vengono venduti né usati per pubblicità.</p>')
 privacy = f'''
 <section class="sez legale"><div class="wrap" style="max-width:820px">
 <h1>Informativa privacy</h1>
 <p><i>Ultimo aggiornamento: novembre 2026</i></p>
 <h2>Titolare</h2>
-<p>{V}, {IND}, email {E}.</p>
+<p>{V}{(', ' + IND) if NEGOZIO_ATTIVO else ''}, email {E}.</p>
 <h2>Quali dati e perché</h2>
 <p><b>Navigazione:</b> il sito non usa cookie né strumenti di statistica o pubblicità. Il fornitore di hosting (Netlify) registra dati tecnici come l'indirizzo IP per sicurezza e funzionamento.</p>
 <p><b>Video:</b> i video di YouTube si caricano dalla versione "privacy avanzata" (youtube-nocookie.com) solo quando premi play; da quel momento si applica l'informativa di Google.</p>
-<p><b>Ordini:</b> nome, email, indirizzo e dettagli dell'ordine servono solo a gestire l'acquisto e la spedizione (base giuridica: esecuzione del contratto) e a rispettare gli obblighi fiscali (obbligo di legge). I pagamenti con carta sono gestiti da Stripe, che tratta i dati di pagamento come titolare autonomo.</p>
-<h2>A chi vengono comunicati</h2>
-<p>Netlify (ricezione dei moduli e hosting), Stripe (pagamenti con carta), InPost (spedizione: nome, cellulare ed email per la consegna al Locker). I dati non vengono venduti né usati per pubblicità.</p>
-<h2>Quanto vengono conservati</h2>
-<p>Per il tempo necessario a gestire l'ordine e, per i dati richiesti dalla legge fiscale, per 10 anni.</p>
+{PRIV_ORD}
+{PRIV_DEST}
 <h2>I tuoi diritti</h2>
 <p>Puoi chiedere in ogni momento di accedere ai tuoi dati, correggerli, cancellarli o limitarne l'uso, scrivendo a {E}. Puoi anche presentare reclamo al Garante per la protezione dei dati personali (garanteprivacy.it).</p>
 <h2>Bambini</h2>
@@ -438,6 +441,40 @@ privacy = f'''
 '''
 page('privacy.html', 'Privacy – Zombetta e Geko', 'Informativa privacy del sito Zombetta e Geko.', privacy)
 
+
+
+if not NEGOZIO_ATTIVO:
+    prodotti = [
+        ('club.webp', 'Maglietta del Club', 'Davanti il bollino del <b>Club degli amici di Zombetta</b>, sul lato del cuore. Dietro a scelta le tappe del <b>giro del mondo</b> oppure <b>Zombetta e Geko</b>. 100% cotone, 2–10 anni, in bianco, celeste, rosa e giallo.'),
+        ('giro-retro.webp', 'Il retro "giro del mondo"', 'Come una vera maglietta da tour: Borgoquieto, Venezia, Tokyo e Roma, ogni città un timbro, ogni timbro un libro.'),
+        ('zombetta-geko.webp', 'La sacca di Zombetta e Geko', 'La sacca con i cordini per la scuola, la palestra o il viaggio, con Zombetta e Geko pronti a partire.'),
+    ]
+    oggetto = 'Prenotazione magliette e sacche Zombetta e Geko'
+    corpo = 'Ciao! Vorrei prenotare:%0A- maglietta / sacca:%0A- colore:%0A- taglia (2-4-6-8-10 anni):%0A- retro (giro del mondo / Zombetta e Geko):%0A- quantità:%0ACittà:%0A'
+    pren_html = f'''
+<section class="pagina-testa"><div class="wrap">
+  <h1>Magliette e sacche</h1>
+  <p>La prima edizione delle magliette del <b>Club degli amici di Zombetta</b> e delle sacche è in preparazione. Prenotale adesso: ti scriviamo appena sono pronte!</p>
+</div></section>
+<section class="sez" style="padding-top:30px"><div class="wrap">
+  <div class="griglia g3">
+    {''.join(f'<article class="card prodotto"><div class="foto"><img src="img/{i}" alt="{t}" loading="lazy"></div><div class="corpo"><span class="etichetta presto">Prenotabile</span><h3>{t}</h3><p>{d}</p></div></article>' for i, t, d in prodotti)}
+  </div>
+  <img src="img/magliette-colori.webp" alt="Le magliette nei quattro colori, con il bollino sul cuore" loading="lazy" style="max-width:720px;margin:40px auto 0;border-radius:18px">
+</div></section>
+<section class="sez lilla" id="prenota"><div class="wrap">
+  <div class="avviso">
+    <h2>Come prenotare</h2>
+    <p>Scrivici cosa vorresti (maglietta o sacca, colore, taglia, retro e quantità): ti rispondiamo con prezzo, tempi e modalità di consegna. <b>Prenotare non ti impegna a comprare.</b></p>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:10px">
+      <a class="btn rosa" href="mailto:{EMAIL}?subject={oggetto.replace(' ', '%20')}&body={corpo.replace(' ', '%20')}">✉️ Scrivi una email</a>
+      <a class="btn" href="{IG}" rel="noopener">📸 Scrivici su Instagram</a>
+    </div>
+    <p style="margin-top:16px;font-weight:800">{EMAIL}</p>
+  </div>
+</div></section>
+'''
+    page('negozio.html', 'Magliette e sacche di Zombetta e Geko', 'Prenota le magliette del Club degli amici di Zombetta e le sacche di Zombetta e Geko.', pren_html)
 
 # ------------------------------------------------------------------ GIOCHI
 giochi = '''
