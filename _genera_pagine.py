@@ -8,6 +8,7 @@ SITE = 'https://zombettaegeko.netlify.app'
 YT = 'https://www.youtube.com/@ZombettaGeko'
 IG = 'https://www.instagram.com/zombettaegeko/'
 TT = 'https://www.tiktok.com/@zombettaegeko'
+FB = 'https://www.facebook.com/zombettaegeko/'
 AMZ = ['https://www.amazon.it/dp/B0HQX4SNHK', 'https://www.amazon.it/dp/B0HQX1T3Z9',
        'https://www.amazon.it/dp/B0HRY223DW', 'https://www.amazon.it/dp/B0HRYVKGC1']
 
@@ -55,6 +56,7 @@ def page(fname, title, desc, body, extra_js=''):
       <ul>
         <li><a href="{YT}" rel="noopener">YouTube</a></li>
         <li><a href="{IG}" rel="noopener">Instagram</a></li>
+        <li><a href="{FB}" rel="noopener">Facebook</a></li>
         <li><a href="{TT}" rel="noopener">TikTok</a></li>
       </ul>
     </div>
