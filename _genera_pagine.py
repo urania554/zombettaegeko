@@ -290,7 +290,7 @@ page('canzone.html', 'La canzone di Zombetta e Geko – con testo', 'La canzone 
 
 # ------------------------------------------------------------------ NEGOZIO
 # Dati del negozio: completare prima della pubblicazione
-NEG = dict(prezzo='9,90', spedizione='4,99', stripe='https://buy.stripe.com/9B68wP8tjdfOc9KcligIo00',   # link Payment Link di Stripe
+NEG = dict(prezzo='6,00', spedizione='4,99', stripe='https://buy.stripe.com/9B68wP8tjdfOc9KcligIo00',   # link Payment Link di Stripe
            venditore='Cinzia Molisano', email='zombettaegeko@gmail.com', indirizzo='')
 taglie = ['2 anni', '4 anni', '6 anni', '8 anni', '10 anni']
 colori = [('bianco', '#ffffff'), ('celeste', '#a9d4f5'), ('rosa', '#f6a6cf'), ('giallo', '#ffe45c')]
@@ -321,7 +321,7 @@ negozio = f'''
         <li>100% cotone, per bambini dai 2 ai 10 anni</li>
         <li>4 colori: bianco, celeste, rosa e giallo</li>
         <li>Stampa DTF morbida, lavabile in lavatrice a 30° al rovescio</li>
-        <li>Spedizione in Italia con InPost {NEG["spedizione"]} € (a un Locker o Point vicino a te) · ritiro a mano gratis</li>
+        <li>Spedizione in Italia con InPost {NEG["spedizione"]} € (a un Locker o Point vicino a te): <b>una sola spedizione fino a 3 magliette</b> · ritiro a mano gratis</li>
       </ul>
       <div class="colori-pallini">{''.join(f'<span title="{n}" style="background:{c}"></span>' for n, c in colori)}</div>
       <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:20px">
@@ -348,7 +348,7 @@ negozio = f'''
     </div>
     <button type="button" class="btn piccolo bianco" id="aggiungi">+ Aggiungi un'altra maglietta</button>
     <label>Consegna
-      <select name="consegna" id="consegna"><option>Spedizione InPost ({NEG["spedizione"]} €)</option><option>Ritiro a mano (gratis)</option></select></label>
+      <select name="consegna" id="consegna"><option>Spedizione InPost ({NEG["spedizione"]} € ogni 3 magliette)</option><option>Ritiro a mano (gratis)</option></select></label>
     <div class="due">
       <label>Nome e cognome<input name="nome" required autocomplete="name"></label>
       <label>Email<input type="email" name="email" required autocomplete="email"></label>
@@ -377,8 +377,9 @@ function calcola() {
   const sped = document.getElementById('consegna').selectedIndex === 0;
   document.getElementById('lab-indirizzo').hidden = !sped;
   document.querySelector('[name=indirizzo]').required = sped; document.querySelector('[name=telefono]').required = sped;
-  const tot = q * PREZZO + (sped && q ? SPED : 0);
-  document.getElementById('totale').textContent = tot.toFixed(2).replace('.', ',') + ' €' + (q ? ' (' + q + ' magliett' + (q > 1 ? 'e' : 'a') + (sped ? ' + spedizione' : '') + ')' : '');
+  const nsped = sped && q ? Math.ceil(q / 3) : 0;
+  const tot = q * PREZZO + nsped * SPED;
+  document.getElementById('totale').textContent = tot.toFixed(2).replace('.', ',') + ' €' + (q ? ' (' + q + ' magliett' + (q > 1 ? 'e' : 'a') + (nsped ? ' + ' + (nsped > 1 ? nsped + ' spedizioni' : 'spedizione') : '') + ')' : '');
 }
 document.querySelector('.modulo').addEventListener('input', calcola); calcola();
 </script>''' % (NEG["prezzo"].replace(",", "."), NEG["spedizione"].replace(",", "."))
@@ -402,7 +403,7 @@ condizioni = f'''
 <h2>1. Chi vende</h2>
 <p>Le magliette di Zombetta e Geko sono vendute da {V}, {IND}, email {E} (di seguito "la venditrice").</p>
 <h2>2. Prodotti e prezzi</h2>
-<p>I prodotti sono descritti nella pagina <a href="negozio.html">Magliette</a>. I prezzi sono in euro e comprendono ogni imposta dovuta. Il costo di spedizione ({NEG["spedizione"]} € per ordine, in Italia con InPost, consegna a un Locker o Point) è indicato prima della conferma; il ritiro a mano è gratuito. I colori a schermo possono differire leggermente dal prodotto reale.</p>
+<p>I prodotti sono descritti nella pagina <a href="negozio.html">Magliette</a>. I prezzi sono in euro e comprendono ogni imposta dovuta. Il costo di spedizione ({NEG["spedizione"]} € per ogni pacco fino a 3 magliette, in Italia con InPost, consegna a un Locker o Point) è indicato prima della conferma; il ritiro a mano è gratuito. I colori a schermo possono differire leggermente dal prodotto reale.</p>
 <h2>3. Come si ordina e si paga</h2>
 <p><b>Con carta:</b> il pagamento avviene sulla pagina sicura di Stripe; la venditrice non vede né conserva i dati della carta. Il contratto si conclude quando ricevi l'email di conferma del pagamento.</p>
 <p><b>Con bonifico:</b> inviando il modulo d'ordine fai una richiesta. La venditrice risponde via email con totale e IBAN; il contratto si conclude con questa conferma e l'ordine viene evaso all'arrivo del bonifico. Se il bonifico non arriva entro 7 giorni l'ordine si considera annullato.</p>
@@ -465,7 +466,9 @@ if not NEGOZIO_ATTIVO:
 <section class="sez lilla" id="prenota"><div class="wrap">
   <div class="avviso">
     <h2>Come prenotare</h2>
-    <p>Scrivici cosa vorresti (maglietta o sacca, colore, taglia, retro e quantità): ti rispondiamo con prezzo, tempi e modalità di consegna. <b>Prenotare non ti impegna a comprare.</b></p>
+    <p>Scrivici cosa vorresti (maglietta o sacca, colore, taglia, retro e quantità): ti rispondiamo con tempi e modalità di consegna. <b>Prenotare non ti impegna a comprare.</b></p>
+    <p class="prezzo" style="margin:8px 0">Maglietta {NEG["prezzo"].replace(",00", "")} €</p>
+    <p>Spedizione in Italia con InPost {NEG["spedizione"]} €: <b>una sola spedizione fino a 3 magliette</b>. Ritiro a mano gratis.</p>
     <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:10px">
       <a class="btn rosa" href="mailto:{EMAIL}?subject={oggetto.replace(' ', '%20')}&body={corpo.replace(' ', '%20')}">✉️ Scrivi una email</a>
       <a class="btn" href="{IG}" rel="noopener">📸 Scrivici su Instagram</a>
