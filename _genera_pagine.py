@@ -291,7 +291,7 @@ page('canzone.html', 'La canzone di Zombetta e Geko – con testo', 'La canzone 
 
 # ------------------------------------------------------------------ NEGOZIO
 # Dati del negozio: completare prima della pubblicazione
-NEG = dict(prezzo='6,00', spedizione='4,99', stripe='https://buy.stripe.com/9B68wP8tjdfOc9KcligIo00',   # link Payment Link di Stripe
+NEG = dict(prezzo='6,00', prezzo_sacca='4,00', spedizione='4,99', stripe='https://buy.stripe.com/9B68wP8tjdfOc9KcligIo00',   # link Payment Link di Stripe
            venditore='Cinzia Molisano', email='zombettaegeko@gmail.com', indirizzo='')
 taglie = ['2 anni', '4 anni', '6 anni', '8 anni', '10 anni']
 colori = [('bianco', '#ffffff'), ('celeste', '#a9d4f5'), ('rosa', '#f6a6cf'), ('giallo', '#ffe45c')]
@@ -449,7 +449,7 @@ if not NEGOZIO_ATTIVO:
     prodotti = [
         ('club.webp', 'Maglietta del Club', 'Davanti il bollino del <b>Club degli amici di Zombetta</b>, sul lato del cuore. Dietro a scelta le tappe del <b>giro del mondo</b> oppure <b>Zombetta e Geko</b>. 100% cotone, 2–10 anni, in bianco, celeste, rosa e giallo.'),
         ('giro-retro.webp', 'Il retro "giro del mondo"', 'Come una vera maglietta da tour: Borgoquieto, Venezia, Tokyo e Roma, ogni città un timbro, ogni timbro un libro.'),
-        ('zombetta-geko.webp', 'La sacca di Zombetta e Geko', 'La sacca con i cordini per la scuola, la palestra o il viaggio, con Zombetta e Geko pronti a partire.'),
+        ('sacca.webp', 'La sacca del Club', 'La sacca <b>nera</b> con i cordini, per la scuola, la palestra o il viaggio, con il bollino del <b>Club degli amici di Zombetta</b>. <span style="font-size:.85em;opacity:.75">(Immagine indicativa)</span>'),
     ]
     oggetto = 'Prenotazione magliette e sacche Zombetta e Geko'
     corpo = 'Ciao! Vorrei prenotare:%0A- maglietta / sacca:%0A- colore:%0A- taglia (2-4-6-8-10 anni):%0A- retro (giro del mondo / Zombetta e Geko):%0A- quantità:%0ACittà:%0A'
@@ -467,9 +467,9 @@ if not NEGOZIO_ATTIVO:
 <section class="sez lilla" id="prenota"><div class="wrap">
   <div class="avviso">
     <h2>Come prenotare</h2>
-    <p>Scrivici cosa vorresti (maglietta o sacca, colore, taglia, retro e quantità): ti rispondiamo con tempi e modalità di consegna. <b>Prenotare non ti impegna a comprare.</b></p>
-    <p class="prezzo" style="margin:8px 0">Maglietta {NEG["prezzo"].replace(",00", "")} €</p>
-    <p>Spedizione in Italia con InPost {NEG["spedizione"]} €: <b>una sola spedizione fino a 3 magliette</b>. Ritiro a mano gratis.</p>
+    <p>Scrivici cosa vorresti (maglietta o sacca, colore, taglia, retro e quantità): ti rispondiamo con il totale, i tempi e le modalità di consegna. <b>Prenotare non ti impegna a comprare.</b></p>
+    <p class="prezzo" style="margin:8px 0">Maglietta {NEG["prezzo"].replace(",00", "")} € · Sacca {NEG["prezzo_sacca"].replace(",00", "")} €</p>
+    <p>Spedizione in Italia con InPost {NEG["spedizione"]} €: <b>una sola spedizione fino a 3 articoli</b> (magliette e sacche insieme). Ritiro a mano gratis.</p>
     <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:10px">
       <a class="btn rosa" href="mailto:{EMAIL}?subject={oggetto.replace(' ', '%20')}&body={corpo.replace(' ', '%20')}">✉️ Scrivi una email</a>
       <a class="btn" href="{IG}" rel="noopener">📸 Scrivici su Instagram</a>
