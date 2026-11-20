@@ -37,22 +37,41 @@
 </div></section>
 <section class="sez" style="padding-top:30px"><div class="wrap">
   <div class="griglia g3">
-    <article class="card prodotto"><div class="foto"><img src="img/club.webp" alt="Maglietta del Club" loading="lazy"></div><div class="corpo"><span class="etichetta presto">Prenotabile</span><h3>Maglietta del Club</h3><p>Davanti il bollino del <b>Club degli amici di Zombetta</b>, sul lato del cuore. Dietro a scelta le tappe del <b>giro del mondo</b> oppure <b>Zombetta e Geko</b>. 100% cotone, 2–10 anni, in bianco, celeste, rosa e giallo.</p></div></article><article class="card prodotto"><div class="foto"><img src="img/giro-retro.webp" alt="Il retro "giro del mondo"" loading="lazy"></div><div class="corpo"><span class="etichetta presto">Prenotabile</span><h3>Il retro "giro del mondo"</h3><p>Come una vera maglietta da tour: Borgoquieto, Venezia, Tokyo e Roma, ogni città un timbro, ogni timbro un libro.</p></div></article><article class="card prodotto"><div class="foto"><img src="img/sacca.webp" alt="La sacca del Club" loading="lazy"></div><div class="corpo"><span class="etichetta presto">Prenotabile</span><h3>La sacca del Club</h3><p>La sacca <b>nera</b> con i cordini, per la scuola, la palestra o il viaggio, con il bollino del <b>Club degli amici di Zombetta</b>. <span style="font-size:.85em;opacity:.75">(Immagine indicativa)</span></p></div></article>
+    <article class="card prodotto"><div class="foto"><img src="img/club.webp" alt="Maglietta del Club" loading="lazy"></div><div class="corpo"><span class="etichetta presto">Prenotabile</span><h3>Maglietta del Club</h3><p>Davanti il bollino del <b>Club degli amici di Zombetta</b>, sul lato del cuore. Dietro a scelta le tappe del <b>giro del mondo</b> oppure <b>Zombetta e Geko</b>. 100% cotone, 2–10 anni, in bianco, celeste, rosa e giallo.</p></div></article><article class="card prodotto"><div class="foto"><img src="img/giro-retro.webp" alt="Il retro "giro del mondo"" loading="lazy"></div><div class="corpo"><span class="etichetta presto">Prenotabile</span><h3>Il retro "giro del mondo"</h3><p>Come una vera maglietta da tour: Borgoquieto, Venezia, Tokyo e Roma, ogni città un timbro, ogni timbro un libro.</p></div></article><article class="card prodotto"><div class="foto"><img src="img/club.webp" alt="La sacca del Club" loading="lazy"></div><div class="corpo"><span class="etichetta presto">Prenotabile</span><h3>La sacca del Club</h3><p>La sacca <b>nera</b> con i cordini, per la scuola, la palestra o il viaggio, con il bollino del <b>Club degli amici di Zombetta</b>.</p></div></article>
   </div>
   <img src="img/magliette-colori.webp" alt="Le magliette nei quattro colori, con il bollino sul cuore" loading="lazy" style="max-width:720px;margin:40px auto 0;border-radius:18px">
 </div></section>
-<section class="sez lilla" id="prenota"><div class="wrap">
-  <div class="avviso">
-    <h2>Come prenotare</h2>
-    <p>Scrivici cosa vorresti (maglietta o sacca, colore, taglia, retro e quantità): ti rispondiamo con il totale, i tempi e le modalità di consegna. <b>Prenotare non ti impegna a comprare.</b></p>
+<section class="sez lilla" id="prenota"><div class="wrap" style="max-width:820px">
+  <div class="titolo-sez"><h2>Prenota qui</h2>
+    <p>Scegli cosa vorresti: ti scriviamo noi via email con il totale, come pagare e i tempi di consegna. <b>Prenotare non ti impegna a comprare.</b></p>
     <p class="prezzo" style="margin:8px 0">Maglietta 6 € · Sacca 4 €</p>
-    <p>Spedizione in Italia con InPost 4,99 €: <b>una sola spedizione fino a 3 articoli</b> (magliette e sacche insieme). Ritiro a mano gratis.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:10px">
-      <a class="btn rosa" href="mailto:zombettaegeko@gmail.com?subject=Prenotazione%20magliette%20e%20sacche%20Zombetta%20e%20Geko&body=Ciao!%20Vorrei%20prenotare:%0A-%20maglietta%20/%20sacca:%0A-%20colore:%0A-%20taglia%20(2-4-6-8-10%20anni):%0A-%20retro%20(giro%20del%20mondo%20/%20Zombetta%20e%20Geko):%0A-%20quantità:%0ACittà:%0A">✉️ Scrivi una email</a>
-      <a class="btn" href="https://www.instagram.com/zombettaegeko/" rel="noopener">📸 Scrivici su Instagram</a>
+    <p>Spedizione in Italia con InPost 4,99 €: <b>una sola spedizione fino a 3 articoli</b> (magliette e sacche insieme). Ritiro a mano gratis.</p></div>
+  <form class="modulo" name="prenotazione" method="POST" action="/grazie.html" data-netlify="true" netlify-honeypot="campo-esca" id="form-pren">
+    <input type="hidden" name="form-name" value="prenotazione">
+    <p hidden><label>Non compilare: <input name="campo-esca"></label></p>
+    <textarea name="riepilogo" hidden></textarea>
+    <div id="righe">
+      <div class="riga riga5">
+        <label>Articolo<select data-k="art"><option>Maglietta</option><option>Sacca</option></select></label>
+        <label>Colore<select data-k="colore"><option>bianco</option><option>celeste</option><option>rosa</option><option>giallo</option></select></label>
+        <label>Taglia<select data-k="taglia"><option>2 anni</option><option>4 anni</option><option>6 anni</option><option>8 anni</option><option>10 anni</option></select></label>
+        <label>Retro<select data-k="retro"><option>Il giro del mondo</option><option>Zombetta e Geko</option></select></label>
+        <label>Quantità<input type="number" data-k="q" min="1" max="10" value="1"></label>
+      </div>
     </div>
-    <p style="margin-top:16px;font-weight:800">zombettaegeko@gmail.com</p>
-  </div>
+    <button type="button" class="btn piccolo bianco" id="aggiungi">+ Aggiungi un altro articolo</button>
+    <label>Consegna<select name="consegna"><option>Spedizione InPost</option><option>Ritiro a mano</option></select></label>
+    <div class="due">
+      <label>Nome<input name="nome" required autocomplete="name"></label>
+      <label>Email<input type="email" name="email" required autocomplete="email"></label>
+    </div>
+    <label>Città<input name="citta" autocomplete="address-level2"></label>
+    <label>Note (facoltativo)<textarea name="note" rows="2"></textarea></label>
+    <p class="totale">Totale indicativo: <b id="totale">–</b></p>
+    <label class="check"><input type="checkbox" required> Ho letto l'<a href="privacy.html">informativa privacy</a>.</label>
+    <button class="btn rosa" type="submit">Invia la prenotazione</button>
+  </form>
+  <p style="text-align:center;margin-top:22px">Preferisci scriverci? <a href="mailto:zombettaegeko@gmail.com?subject=Prenotazione%20magliette%20e%20sacche%20Zombetta%20e%20Geko&body=Ciao!%20Vorrei%20prenotare:%0A-%20maglietta%20/%20sacca:%0A-%20colore:%0A-%20taglia%20(2-4-6-8-10%20anni):%0A-%20retro%20(giro%20del%20mondo%20/%20Zombetta%20e%20Geko):%0A-%20quantità:%0ACittà:%0A">zombettaegeko@gmail.com</a> · <a href="https://www.instagram.com/zombettaegeko/" rel="noopener">Instagram</a></p>
 </div></section>
 
 </main>
@@ -79,6 +98,24 @@
   </div>
 </footer>
 <script src="site.js"></script>
-
+<script>
+{
+const PM = 6.00, PS = 4.00, SP = 4.99;
+const righe = document.getElementById('righe'), form = document.getElementById('form-pren');
+function stato(r) { const sacca = r.querySelector('[data-k=art]').value === 'Sacca'; ['colore','taglia','retro'].forEach(k => { const el = r.querySelector('[data-k=' + k + ']'); el.disabled = sacca; el.closest('label').style.opacity = sacca ? .4 : 1; }); }
+function calcola() {
+  let pezzi = 0, tot = 0, testo = [];
+  righe.querySelectorAll('.riga').forEach(r => { stato(r); const g = k => r.querySelector('[data-k=' + k + ']').value; const q = Math.max(1, parseInt(g('q')) || 1); pezzi += q;
+    if (g('art') === 'Sacca') { tot += q * PS; testo.push('Sacca · quantità ' + q); }
+    else { tot += q * PM; testo.push('Maglietta · colore ' + g('colore') + ' · taglia ' + g('taglia') + ' · retro ' + g('retro') + ' · quantità ' + q); } });
+  const inpost = form.consegna.selectedIndex === 0, nsp = inpost ? Math.ceil(pezzi / 3) : 0;
+  tot += nsp * SP;
+  form.riepilogo.value = testo.join('\n') + '\nConsegna: ' + form.consegna.value;
+  document.getElementById('totale').textContent = tot.toFixed(2).replace('.', ',') + ' €' + (nsp ? ' (con ' + (nsp > 1 ? nsp + ' spedizioni' : 'la spedizione') + ')' : '');
+}
+document.getElementById('aggiungi').addEventListener('click', () => { if (righe.children.length >= 8) return; const r = righe.querySelector('.riga').cloneNode(true); r.querySelector('[data-k=q]').value = 1; righe.appendChild(r); calcola(); });
+form.addEventListener('input', calcola); form.addEventListener('change', calcola); form.addEventListener('submit', calcola); calcola();
+}
+</script>
 </body>
 </html>

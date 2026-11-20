@@ -183,5 +183,7 @@ select{font:inherit;font-weight:700;border:3px solid var(--viola-scuro);border-r
 .modulo .check input{width:auto;margin-top:6px}
 .modulo .btn{justify-self:start}
 .totale{font-size:1.25rem;margin:0}
-@media (max-width:640px){.modulo .riga{grid-template-columns:1fr 1fr}.modulo .due{grid-template-columns:1fr}}
+
+.modulo .riga5{grid-template-columns:1fr 1fr 1fr 1.3fr .8fr}
+@media (max-width:640px){.modulo .riga,.modulo .riga5{grid-template-columns:1fr 1fr}.modulo .due{grid-template-columns:1fr}}
 .legale h1{margin-top:20px}.legale h2{font-size:1.4rem;margin-top:28px}

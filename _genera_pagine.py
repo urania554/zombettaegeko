@@ -395,6 +395,14 @@ grazie = f'''
 </div></div></section>
 '''
 if NEGOZIO_ATTIVO: page('grazie.html', 'Ordine ricevuto – Zombetta e Geko', 'Grazie per il tuo ordine.', grazie)
+else: page('grazie.html', 'Prenotazione ricevuta – Zombetta e Geko', 'Grazie per la prenotazione.', '''
+<section class="sez"><div class="wrap"><div class="avviso">
+  <h1>Grazie! 🎉</h1>
+  <p>Abbiamo ricevuto la tua prenotazione. Ti scriviamo presto all'email che hai indicato con il totale, come pagare e i tempi di consegna (controlla anche lo spam).</p>
+  <p>Zombetta e Geko stanno già preparando la valigia!</p>
+  <a class="btn" href="index.html">Torna alla home</a>
+</div></div></section>
+''')
 
 V = NEG['venditore']; E = NEG['email'] or EMAIL; IND = NEG['indirizzo'] or '[INDIRIZZO]'
 condizioni = f'''
@@ -422,8 +430,8 @@ condizioni = f'''
 '''
 if NEGOZIO_ATTIVO: page('condizioni.html', 'Condizioni di vendita – Zombetta e Geko', 'Condizioni di vendita delle magliette di Zombetta e Geko.', condizioni)
 
-PRIV_ORD = ("""<p><b>Ordini:</b> nome, email, indirizzo e dettagli dell'ordine servono solo a gestire l'acquisto e la spedizione (base giuridica: esecuzione del contratto) e a rispettare gli obblighi fiscali (obbligo di legge). I pagamenti con carta sono gestiti da Stripe, che tratta i dati di pagamento come titolare autonomo.</p>""" if NEGOZIO_ATTIVO else '<p><b>Contatti e prenotazioni:</b> se ci scrivi via email o su Instagram (per esempio per prenotare una maglietta), usiamo il tuo nome e i tuoi contatti solo per risponderti e non li comunichiamo a nessuno. Li cancelliamo quando non servono più, o prima se ce lo chiedi.</p>')
-PRIV_DEST = ('<h2>A chi vengono comunicati</h2>\n<p>Netlify (ricezione dei moduli e hosting), Stripe (pagamenti con carta), InPost (spedizione: nome, cellulare ed email per la consegna al Locker). I dati non vengono venduti né usati per pubblicità.</p>\n<h2>Quanto vengono conservati</h2>\n<p>Per il tempo necessario a gestire l\'ordine e, per i dati richiesti dalla legge fiscale, per 10 anni.</p>' if NEGOZIO_ATTIVO else '<h2>A chi vengono comunicati</h2>\n<p>A nessuno. Il sito è ospitato da Netlify, che tratta solo i dati tecnici di navigazione. I dati non vengono venduti né usati per pubblicità.</p>')
+PRIV_ORD = ("""<p><b>Ordini:</b> nome, email, indirizzo e dettagli dell'ordine servono solo a gestire l'acquisto e la spedizione (base giuridica: esecuzione del contratto) e a rispettare gli obblighi fiscali (obbligo di legge). I pagamenti con carta sono gestiti da Stripe, che tratta i dati di pagamento come titolare autonomo.</p>""" if NEGOZIO_ATTIVO else '<p><b>Contatti e prenotazioni:</b> se compili il modulo di prenotazione o ci scrivi via email o su Instagram, usiamo nome, email, città e i dettagli della richiesta solo per risponderti e gestire la prenotazione (base giuridica: misure precontrattuali richieste da te). Li cancelliamo quando non servono più, o prima se ce lo chiedi.</p>')
+PRIV_DEST = ('<h2>A chi vengono comunicati</h2>\n<p>Netlify (ricezione dei moduli e hosting), Stripe (pagamenti con carta), InPost (spedizione: nome, cellulare ed email per la consegna al Locker). I dati non vengono venduti né usati per pubblicità.</p>\n<h2>Quanto vengono conservati</h2>\n<p>Per il tempo necessario a gestire l\'ordine e, per i dati richiesti dalla legge fiscale, per 10 anni.</p>' if NEGOZIO_ATTIVO else '<h2>A chi vengono comunicati</h2>\n<p>Il sito è ospitato da Netlify, che tratta i dati tecnici di navigazione e riceve per nostro conto i moduli di prenotazione. I dati non vengono venduti né usati per pubblicità.</p>')
 privacy = f'''
 <section class="sez legale"><div class="wrap" style="max-width:820px">
 <h1>Informativa privacy</h1>
@@ -449,7 +457,7 @@ if not NEGOZIO_ATTIVO:
     prodotti = [
         ('club.webp', 'Maglietta del Club', 'Davanti il bollino del <b>Club degli amici di Zombetta</b>, sul lato del cuore. Dietro a scelta le tappe del <b>giro del mondo</b> oppure <b>Zombetta e Geko</b>. 100% cotone, 2–10 anni, in bianco, celeste, rosa e giallo.'),
         ('giro-retro.webp', 'Il retro "giro del mondo"', 'Come una vera maglietta da tour: Borgoquieto, Venezia, Tokyo e Roma, ogni città un timbro, ogni timbro un libro.'),
-        ('sacca.webp', 'La sacca del Club', 'La sacca <b>nera</b> con i cordini, per la scuola, la palestra o il viaggio, con il bollino del <b>Club degli amici di Zombetta</b>. <span style="font-size:.85em;opacity:.75">(Immagine indicativa)</span>'),
+        ('club.webp', 'La sacca del Club', 'La sacca <b>nera</b> con i cordini, per la scuola, la palestra o il viaggio, con il bollino del <b>Club degli amici di Zombetta</b>.'),
     ]
     oggetto = 'Prenotazione magliette e sacche Zombetta e Geko'
     corpo = 'Ciao! Vorrei prenotare:%0A- maglietta / sacca:%0A- colore:%0A- taglia (2-4-6-8-10 anni):%0A- retro (giro del mondo / Zombetta e Geko):%0A- quantità:%0ACittà:%0A'
@@ -464,21 +472,60 @@ if not NEGOZIO_ATTIVO:
   </div>
   <img src="img/magliette-colori.webp" alt="Le magliette nei quattro colori, con il bollino sul cuore" loading="lazy" style="max-width:720px;margin:40px auto 0;border-radius:18px">
 </div></section>
-<section class="sez lilla" id="prenota"><div class="wrap">
-  <div class="avviso">
-    <h2>Come prenotare</h2>
-    <p>Scrivici cosa vorresti (maglietta o sacca, colore, taglia, retro e quantità): ti rispondiamo con il totale, i tempi e le modalità di consegna. <b>Prenotare non ti impegna a comprare.</b></p>
+<section class="sez lilla" id="prenota"><div class="wrap" style="max-width:820px">
+  <div class="titolo-sez"><h2>Prenota qui</h2>
+    <p>Scegli cosa vorresti: ti scriviamo noi via email con il totale, come pagare e i tempi di consegna. <b>Prenotare non ti impegna a comprare.</b></p>
     <p class="prezzo" style="margin:8px 0">Maglietta {NEG["prezzo"].replace(",00", "")} € · Sacca {NEG["prezzo_sacca"].replace(",00", "")} €</p>
-    <p>Spedizione in Italia con InPost {NEG["spedizione"]} €: <b>una sola spedizione fino a 3 articoli</b> (magliette e sacche insieme). Ritiro a mano gratis.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:10px">
-      <a class="btn rosa" href="mailto:{EMAIL}?subject={oggetto.replace(' ', '%20')}&body={corpo.replace(' ', '%20')}">✉️ Scrivi una email</a>
-      <a class="btn" href="{IG}" rel="noopener">📸 Scrivici su Instagram</a>
+    <p>Spedizione in Italia con InPost {NEG["spedizione"]} €: <b>una sola spedizione fino a 3 articoli</b> (magliette e sacche insieme). Ritiro a mano gratis.</p></div>
+  <form class="modulo" name="prenotazione" method="POST" action="/grazie.html" data-netlify="true" netlify-honeypot="campo-esca" id="form-pren">
+    <input type="hidden" name="form-name" value="prenotazione">
+    <p hidden><label>Non compilare: <input name="campo-esca"></label></p>
+    <textarea name="riepilogo" hidden></textarea>
+    <div id="righe">
+      <div class="riga riga5">
+        <label>Articolo<select data-k="art"><option>Maglietta</option><option>Sacca</option></select></label>
+        <label>Colore<select data-k="colore">{opts([c for c, _ in colori])}</select></label>
+        <label>Taglia<select data-k="taglia">{opts(taglie)}</select></label>
+        <label>Retro<select data-k="retro"><option>Il giro del mondo</option><option>Zombetta e Geko</option></select></label>
+        <label>Quantità<input type="number" data-k="q" min="1" max="10" value="1"></label>
+      </div>
     </div>
-    <p style="margin-top:16px;font-weight:800">{EMAIL}</p>
-  </div>
+    <button type="button" class="btn piccolo bianco" id="aggiungi">+ Aggiungi un altro articolo</button>
+    <label>Consegna<select name="consegna"><option>Spedizione InPost</option><option>Ritiro a mano</option></select></label>
+    <div class="due">
+      <label>Nome<input name="nome" required autocomplete="name"></label>
+      <label>Email<input type="email" name="email" required autocomplete="email"></label>
+    </div>
+    <label>Città<input name="citta" autocomplete="address-level2"></label>
+    <label>Note (facoltativo)<textarea name="note" rows="2"></textarea></label>
+    <p class="totale">Totale indicativo: <b id="totale">–</b></p>
+    <label class="check"><input type="checkbox" required> Ho letto l'<a href="privacy.html">informativa privacy</a>.</label>
+    <button class="btn rosa" type="submit">Invia la prenotazione</button>
+  </form>
+  <p style="text-align:center;margin-top:22px">Preferisci scriverci? <a href="mailto:{EMAIL}?subject={oggetto.replace(' ', '%20')}&body={corpo.replace(' ', '%20')}">{EMAIL}</a> · <a href="{IG}" rel="noopener">Instagram</a></p>
 </div></section>
 '''
-    page('negozio.html', 'Magliette e sacche di Zombetta e Geko', 'Prenota le magliette del Club degli amici di Zombetta e le sacche di Zombetta e Geko.', pren_html)
+
+    PREN_JS = """<script>
+{
+const PM = %s, PS = %s, SP = %s;
+const righe = document.getElementById('righe'), form = document.getElementById('form-pren');
+function stato(r) { const sacca = r.querySelector('[data-k=art]').value === 'Sacca'; ['colore','taglia','retro'].forEach(k => { const el = r.querySelector('[data-k=' + k + ']'); el.disabled = sacca; el.closest('label').style.opacity = sacca ? .4 : 1; }); }
+function calcola() {
+  let pezzi = 0, tot = 0, testo = [];
+  righe.querySelectorAll('.riga').forEach(r => { stato(r); const g = k => r.querySelector('[data-k=' + k + ']').value; const q = Math.max(1, parseInt(g('q')) || 1); pezzi += q;
+    if (g('art') === 'Sacca') { tot += q * PS; testo.push('Sacca · quantità ' + q); }
+    else { tot += q * PM; testo.push('Maglietta · colore ' + g('colore') + ' · taglia ' + g('taglia') + ' · retro ' + g('retro') + ' · quantità ' + q); } });
+  const inpost = form.consegna.selectedIndex === 0, nsp = inpost ? Math.ceil(pezzi / 3) : 0;
+  tot += nsp * SP;
+  form.riepilogo.value = testo.join('\\n') + '\\nConsegna: ' + form.consegna.value;
+  document.getElementById('totale').textContent = tot.toFixed(2).replace('.', ',') + ' €' + (nsp ? ' (con ' + (nsp > 1 ? nsp + ' spedizioni' : 'la spedizione') + ')' : '');
+}
+document.getElementById('aggiungi').addEventListener('click', () => { if (righe.children.length >= 8) return; const r = righe.querySelector('.riga').cloneNode(true); r.querySelector('[data-k=q]').value = 1; righe.appendChild(r); calcola(); });
+form.addEventListener('input', calcola); form.addEventListener('change', calcola); form.addEventListener('submit', calcola); calcola();
+}
+</script>""" % (NEG["prezzo"].replace(",", "."), NEG["prezzo_sacca"].replace(",", "."), NEG["spedizione"].replace(",", "."))
+    page('negozio.html', 'Magliette e sacche di Zombetta e Geko', 'Prenota le magliette del Club degli amici di Zombetta e le sacche di Zombetta e Geko.', pren_html, PREN_JS)
 
 # ------------------------------------------------------------------ GIOCHI
 giochi = '''
