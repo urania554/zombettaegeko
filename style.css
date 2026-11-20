@@ -27,7 +27,8 @@ p{margin:0 0 1em}
 /* ---------- header ---------- */
 .top{position:sticky;top:0;z-index:20;background:rgba(255,247,230,.94);backdrop-filter:blur(8px);border-bottom:3px dashed #e6cfa6}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:78px}
-.top .brand img{height:58px;width:auto}
+.top .brand{display:flex;align-items:center;gap:8px}.top .brand img{height:58px;width:auto}.top .brand img.tondo{width:58px;border-radius:50%;border:3px solid var(--viola-scuro);background:#fff}
+@media(max-width:420px){.top .brand img{height:46px}.top .brand img.tondo{width:46px}}
 .menu{display:flex;gap:6px;list-style:none;margin:0;padding:0}
 .menu a{display:block;font-family:Fredoka;font-weight:600;font-size:1.08rem;text-decoration:none;color:var(--viola-scuro);padding:8px 14px;border-radius:999px;transition:background .15s,transform .15s}
 .menu a:hover{background:var(--lilla);transform:rotate(-2deg)}

@@ -33,13 +33,14 @@ def page(fname, title, desc, body, extra_js=''):
 <meta property="og:image" content="{SITE}/img/og.jpg">
 <meta property="og:type" content="website">
 <link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preload" href="fonts/fredoka-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="index.html" aria-label="Zombetta e Geko, home"><img src="img/logo.webp" alt="Zombetta e Geko" width="160" height="58"></a>
+    <a class="brand" href="index.html" aria-label="Zombetta e Geko, home"><img class="tondo" src="img/logo-tondo.webp" alt="" width="58" height="58"><img src="img/logo.webp" alt="Zombetta e Geko" width="160" height="58"></a>
     <button class="burger" aria-label="Apri il menu" aria-expanded="false">☰</button>
     <nav><ul class="menu">
 {nav}
