@@ -457,6 +457,7 @@ if not NEGOZIO_ATTIVO:
     prodotti = [
         ('club.webp', 'Maglietta del Club', 'Davanti il bollino del <b>Club degli amici di Zombetta</b>, sul lato del cuore. Dietro a scelta le tappe del <b>giro del mondo</b> oppure <b>Zombetta e Geko</b>. 100% cotone, 2–10 anni, in bianco, celeste, rosa e giallo.'),
         ('giro-retro.webp', 'Il retro "giro del mondo"', 'Come una vera maglietta da tour: Borgoquieto, Venezia, Tokyo e Roma, ogni città un timbro, ogni timbro un libro.'),
+        ('giro-fronte.webp', 'Il retro "Zombetta e Geko"', 'Zombetta e Geko insieme, pronti a partire per una nuova avventura: per chi vuole i due amici sempre con sé.'),
         ('sacca.webp', 'La sacca del Club', 'La sacca zainetto in cotone <b>color naturale</b>, con i cordini, per la scuola, la palestra o il viaggio, con il bollino del <b>Club degli amici di Zombetta</b>. <span style="font-size:.85em;opacity:.75">(Immagine indicativa)</span>'),
     ]
     oggetto = 'Prenotazione magliette e sacche Zombetta e Geko'
@@ -467,8 +468,8 @@ if not NEGOZIO_ATTIVO:
   <p>La prima edizione delle magliette del <b>Club degli amici di Zombetta</b> e delle sacche è in preparazione. Prenotale adesso: ti scriviamo appena sono pronte!</p>
 </div></section>
 <section class="sez" style="padding-top:30px"><div class="wrap">
-  <div class="griglia g3">
-    {''.join(f'<article class="card prodotto"><div class="foto"><img src="img/{i}" alt="{t}" loading="lazy"></div><div class="corpo"><span class="etichetta presto">Prenotabile</span><h3>{t}</h3><p>{d}</p></div></article>' for i, t, d in prodotti)}
+  <div class="griglia g4">
+    {''.join(f'<article class="card prodotto"><div class="foto"><img src="img/{i}" alt="{t}" loading="lazy"></div><div class="corpo"><span class="etichetta presto">{'Retro a scelta' if t.startswith('Il retro') else 'Prenotabile'}</span><h3>{t}</h3><p>{d}</p></div></article>' for i, t, d in prodotti)}
   </div>
   <img src="img/magliette-colori.webp" alt="Le magliette nei quattro colori, con il bollino sul cuore" loading="lazy" style="max-width:720px;margin:40px auto 0;border-radius:18px">
 </div></section>
