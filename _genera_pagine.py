@@ -457,7 +457,7 @@ if not NEGOZIO_ATTIVO:
     prodotti = [
         ('club.webp', 'Maglietta del Club', 'Davanti il bollino del <b>Club degli amici di Zombetta</b>, sul lato del cuore. Dietro a scelta le tappe del <b>giro del mondo</b> oppure <b>Zombetta e Geko</b>. 100% cotone, 2–10 anni, in bianco, celeste, rosa e giallo.'),
         ('giro-retro.webp', 'Il retro "giro del mondo"', 'Come una vera maglietta da tour: Borgoquieto, Venezia, Tokyo e Roma, ogni città un timbro, ogni timbro un libro.'),
-        ('sacca.webp', 'La sacca del Club', 'La sacca zainetto <b>nera</b> in cotone, con i cordini, per la scuola, la palestra o il viaggio, con il bollino del <b>Club degli amici di Zombetta</b>. <span style="font-size:.85em;opacity:.75">(Immagine indicativa)</span>'),
+        ('sacca.webp', 'La sacca del Club', 'La sacca zainetto in cotone <b>color naturale</b>, con i cordini, per la scuola, la palestra o il viaggio, con il bollino del <b>Club degli amici di Zombetta</b>. <span style="font-size:.85em;opacity:.75">(Immagine indicativa)</span>'),
     ]
     oggetto = 'Prenotazione magliette e sacche Zombetta e Geko'
     corpo = 'Ciao! Vorrei prenotare:%0A- maglietta / sacca:%0A- colore:%0A- taglia (2-4-6-8-10 anni):%0A- retro (giro del mondo / Zombetta e Geko):%0A- quantità:%0ACittà:%0A'
