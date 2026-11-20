@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /grazie.html
+Sitemap: https://zombettaegeko.it/sitemap.xml

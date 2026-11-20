@@ -54,7 +54,7 @@ def page(fname, title, desc, body, extra_js=''):
   <div class="wrap">
     <div>
       <img src="img/logo.webp" alt="" width="200" style="margin-bottom:12px">
-      <p>Una bambina zombie, un geco e una valigia piena di misteri. Storie da leggere e guardare insieme, per bambini dai 5 agli 8 anni.</p>
+      <p>Una bambina zombie, un geco e una valigia piena di misteri. Storie da leggere e guardare insieme, per piccoli e grandi.</p>
     </div>
     <div>
       <h3>Segui le avventure</h3>
@@ -144,7 +144,7 @@ home = f'''
     <div>
       <img class="logo-grande" src="img/logo.webp" alt="Zombetta e Geko" width="520" height="300">
       <h1 style="font-size:clamp(1.6rem,3.4vw,2.4rem)">Una bambina zombie, un geco<br>e una valigia piena di misteri</h1>
-      <p class="sotto">Libri illustrati, cartoni animati, una canzone da cantare e giochi, per bambini dai 5 agli 8 anni.</p>
+      <p class="sotto">Libri illustrati, cartoni animati, una canzone da cantare e giochi.</p>
       <div class="bottoni">
         <a class="btn" href="libri.html">📚 I libri</a>
         <a class="btn verde" href="video.html">▶ I cartoni</a>
@@ -201,13 +201,13 @@ home = f'''
 </section>
 '''
 page('index.html', 'Zombetta e Geko – Libri, cartoni e giochi per bambini',
-     'Le avventure di Zombetta, una bambina zombie, e del suo amico geco Geko: libri illustrati, cartoni animati, la canzone e giochi per bambini dai 5 agli 8 anni.', home)
+     'Le avventure di Zombetta, una bambina zombie, e del suo amico geco Geko: libri illustrati, cartoni animati, la canzone e i giochi.', home)
 
 # ------------------------------------------------------------------ LIBRI
 libri = f'''
 <section class="pagina-testa"><div class="wrap">
   <h1>I libri</h1>
-  <p>Quattro libri illustrati, quattro città e un unico grande mistero. Per bambini dai 5 agli 8 anni, da leggere insieme o da soli.</p>
+  <p>Quattro libri illustrati, quattro città e un unico grande mistero. Da leggere insieme o da soli.</p>
 </div></section>
 <section class="sez" style="padding-top:30px"><div class="wrap">
   <div class="griglia g4">
@@ -580,3 +580,17 @@ giochi = '''
 '''
 page('giochi.html', 'Giochi di Zombetta e Geko – memory, puzzle e quiz', 'Giochi gratuiti per bambini con Zombetta e Geko: memory, puzzle e quiz.', giochi, '<script src="giochi.js"></script>')
 print('giochi ok')
+
+# ------------------------------------------------------------------ 404, robots, sitemap
+page('404.html', 'Pagina non trovata – Zombetta e Geko', 'Questa pagina non esiste.', '''
+<section class="sez"><div class="wrap"><div class="avviso">
+  <h1>Ops! Pagina persa 🦎</h1>
+  <p>Geko l'ha cercata dappertutto, perfino nello zaino, ma questa pagina non c'è.</p>
+  <a class="btn" href="/index.html">Torna alla home</a>
+</div></div></section>
+''')
+PAGINE = ['', 'libri.html', 'video.html', 'canzone.html', 'giochi.html', 'negozio.html', 'privacy.html']
+open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    + ''.join(f'  <url><loc>{SITE}/{p}</loc></url>\n' for p in PAGINE) + '</urlset>\n')
+open('robots.txt', 'w').write(f'User-agent: *\nDisallow: /grazie.html\nSitemap: {SITE}/sitemap.xml\n')
+_h = open('404.html').read().replace('<head>', '<head>\n<base href="/">', 1); open('404.html', 'w').write(_h)
