@@ -259,7 +259,7 @@ canzone = f'''
   <p>Canta con loro! Nel video il testo si colora: <b class="chi-z">rosa</b> per Zombetta, <b class="chi-g">verde</b> per Geko e <b class="chi-i">giallo</b> quando cantano insieme.</p>
 </div></section>
 <section class="sez" style="padding-top:30px"><div class="wrap" style="max-width:900px">
-  <div data-uscita="2026-11-23T17:00">
+  <div data-uscita="2026-11-22T11:30">
     <div class="video-box" data-yt="JZ6NbpbDOK4" data-titolo="La canzone di Zombetta e Geko">
       <img class="copertina" src="img/canzone.webp" alt="La canzone di Zombetta e Geko">
       <button class="play" aria-label="Guarda il video della canzone">▶</button>
