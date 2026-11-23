@@ -65,12 +65,13 @@
     </div>
     <label>Cellulare<input type="tel" name="cellulare" required autocomplete="tel" inputmode="tel" placeholder="Per l’SMS di InPost"></label>
     <fieldset id="dati-inpost" style="border:0;padding:0;margin:0;display:grid;gap:16px">
+      <label>Indirizzo (via e numero civico)<input name="indirizzo" autocomplete="street-address" data-inpost></label>
       <div class="due">
         <label>Città<input name="citta" autocomplete="address-level2" data-inpost></label>
-        <label>CAP<input name="cap" autocomplete="postal-code" inputmode="numeric" maxlength="5" pattern="[0-9]{5}" data-inpost></label>
+        <label>CAP e provincia<input name="cap" autocomplete="postal-code" placeholder="es. 24121 BG" data-inpost></label>
       </div>
       <label>Locker o Point InPost preferito (facoltativo)<input name="locker" placeholder="Codice o indirizzo, es. MIL123M o Via Roma 1"></label>
-      <p style="margin:-8px 0 0;font-size:.9em">Trovalo sulla <a href="https://inpost.it/en/find-location" target="_blank" rel="noopener">mappa InPost</a>. Se non lo sai, lo scegliamo noi vicino al tuo CAP.</p>
+      <p style="margin:-8px 0 0;font-size:.9em">Trovalo sulla <a href="https://inpost.it/en/find-location" target="_blank" rel="noopener">mappa InPost</a>. Se non lo sai, lo scegliamo noi vicino al tuo indirizzo.</p>
     </fieldset>
     <label>Note (facoltativo)<textarea name="note" rows="2"></textarea></label>
     <label class="check"><input type="checkbox" name="avvisami_magliette" value="sì"> <span>Avvisatemi anche quando arrivano le magliette</span></label>
@@ -78,7 +79,7 @@
     <label class="check"><input type="checkbox" required> <span>Ho letto l'<a href="privacy.html">informativa privacy</a>.</span></label>
     <button class="btn rosa" type="submit">Invia l'ordine</button>
   </form>
-  <p style="text-align:center;margin-top:22px">Preferisci scriverci? <a href="mailto:zombettaegeko@gmail.com?subject=Ordine%20sacca%20Zombetta%20e%20Geko&body=Ciao!%20Vorrei%20ordinare:%0A-%20sacca,%20quantità:%0ANome%20e%20cognome:%0ACellulare:%0ACittà%20e%20CAP:%0ALocker%20InPost%20(se%20lo%20sai):%0A">zombettaegeko@gmail.com</a> · <a href="https://www.instagram.com/zombettaegeko/" rel="noopener">Instagram</a></p>
+  <p style="text-align:center;margin-top:22px">Preferisci scriverci? <a href="mailto:zombettaegeko@gmail.com?subject=Ordine%20sacca%20Zombetta%20e%20Geko&body=Ciao!%20Vorrei%20ordinare:%0A-%20sacca,%20quantità:%0ANome%20e%20cognome:%0ACellulare:%0AIndirizzo,%20città%20e%20CAP:%0ALocker%20InPost%20(se%20lo%20sai):%0A">zombettaegeko@gmail.com</a> · <a href="https://www.instagram.com/zombettaegeko/" rel="noopener">Instagram</a></p>
 </div></section>
 <section class="sez"><div class="wrap">
   <div class="titolo-sez"><h2>In arrivo: le magliette del Club</h2>
