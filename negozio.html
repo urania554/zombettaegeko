@@ -50,28 +50,30 @@
 <section class="sez lilla" id="ordina"><div class="wrap" style="max-width:820px">
   <div class="titolo-sez"><h2>Ordina la sacca</h2>
     <p>Compila il modulo: ti scriviamo noi via email con il totale e come pagare. La sacca parte appena arriva il pagamento.</p>
-    <p>Spedizione in Italia con InPost 4,99 €: <b>una sola spedizione fino a 3 sacche</b>. Ritiro a mano gratis.</p></div>
+    <p>Spedizione in Italia: <b>InPost</b> a un Locker o Point 4,99 € oppure <b>a casa</b> con Poste Italiane 7,10 €. <b>Una sola spedizione fino a 3 sacche</b>. Ritiro a mano gratis.</p></div>
   <form class="modulo" name="prenotazione" method="POST" action="/grazie.html" data-netlify="true" netlify-honeypot="campo-esca" id="form-pren">
     <input type="hidden" name="form-name" value="prenotazione">
     <p hidden><label>Non compilare: <input name="campo-esca"></label></p>
     <textarea name="riepilogo" hidden></textarea>
     <div class="due">
       <label>Quantità<input type="number" name="quantita" min="1" max="10" value="1"></label>
-      <label>Consegna<select name="consegna"><option>Spedizione InPost</option><option>Ritiro a mano</option></select></label>
+      <label>Consegna<select name="consegna"><option>InPost a un Locker o Point (4,99 €)</option><option>A casa con Poste Italiane (7,10 €)</option><option>Ritiro a mano (gratis)</option></select></label>
     </div>
     <div class="due">
       <label>Nome e cognome<input name="nome" required autocomplete="name"></label>
       <label>Email<input type="email" name="email" required autocomplete="email"></label>
     </div>
-    <label>Cellulare<input type="tel" name="cellulare" required autocomplete="tel" inputmode="tel" placeholder="Per l’SMS di InPost"></label>
+    <label>Cellulare<input type="tel" name="cellulare" required autocomplete="tel" inputmode="tel" placeholder="Per gli avvisi del corriere"></label>
     <fieldset id="dati-inpost" style="border:0;padding:0;margin:0;display:grid;gap:16px">
       <label>Indirizzo (via e numero civico)<input name="indirizzo" autocomplete="street-address" data-inpost></label>
       <div class="due">
         <label>Città<input name="citta" autocomplete="address-level2" data-inpost></label>
         <label>CAP e provincia<input name="cap" autocomplete="postal-code" placeholder="es. 24121 BG" data-inpost></label>
       </div>
+      <div id="dati-locker" style="display:grid;gap:16px">
       <label>Locker o Point InPost preferito (facoltativo)<input name="locker" placeholder="Codice o indirizzo, es. MIL123M o Via Roma 1"></label>
       <p style="margin:-8px 0 0;font-size:.9em">Trovalo sulla <a href="https://inpost.it/en/find-location" target="_blank" rel="noopener">mappa InPost</a>. Se non lo sai, lo scegliamo noi vicino al tuo indirizzo.</p>
+      </div>
     </fieldset>
     <label>Note (facoltativo)<textarea name="note" rows="2"></textarea></label>
     <label class="check"><input type="checkbox" name="avvisami_magliette" value="sì"> <span>Avvisatemi anche quando arrivano le magliette</span></label>
@@ -116,15 +118,16 @@
 <script src="site.js"></script>
 <script>
 {
-const PS = 4.00, SP = 4.99;
+const PS = 4.00, SP = 4.99, SPC = 7.10;
 const form = document.getElementById('form-pren');
 function calcola() {
   const q = Math.max(1, parseInt(form.quantita.value) || 1);
-  const nsp = form.consegna.selectedIndex === 0 ? Math.ceil(q / 3) : 0;
-  const tot = q * PS + nsp * SP;
-  const inpost = nsp > 0, box = document.getElementById('dati-inpost');
-  box.hidden = !inpost; box.style.display = inpost ? 'grid' : 'none';
-  box.querySelectorAll('[data-inpost]').forEach(el => el.required = inpost);
+  const tipo = form.consegna.selectedIndex, nsp = tipo < 2 ? Math.ceil(q / 3) : 0;
+  const tot = q * PS + nsp * (tipo === 0 ? SP : SPC);
+  const sped = nsp > 0, box = document.getElementById('dati-inpost'), lk = document.getElementById('dati-locker');
+  box.hidden = !sped; box.style.display = sped ? 'grid' : 'none';
+  lk.style.display = tipo === 0 ? 'grid' : 'none';
+  box.querySelectorAll('[data-inpost]').forEach(el => el.required = sped);
   const totTxt = tot.toFixed(2).replace('.', ',') + ' €';
   form.riepilogo.value = 'Sacca · quantità ' + q + '\nConsegna: ' + form.consegna.value + '\nTotale: ' + totTxt + (form.avvisami_magliette.checked ? '\nAvvisare per le magliette' : '');
   document.getElementById('totale').textContent = totTxt + (nsp ? ' (con ' + (nsp > 1 ? nsp + ' spedizioni' : 'la spedizione') + ')' : '');

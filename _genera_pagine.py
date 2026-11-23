@@ -291,7 +291,7 @@ page('canzone.html', 'La canzone di Zombetta e Geko – con testo', 'La canzone 
 
 # ------------------------------------------------------------------ NEGOZIO
 # Dati del negozio: completare prima della pubblicazione
-NEG = dict(prezzo='6,00', prezzo_sacca='4,00', spedizione='4,99', stripe='https://buy.stripe.com/9B68wP8tjdfOc9KcligIo00',   # link Payment Link di Stripe
+NEG = dict(prezzo='6,00', prezzo_sacca='4,00', spedizione='4,99', spedizione_casa='7,10', stripe='https://buy.stripe.com/9B68wP8tjdfOc9KcligIo00',   # link Payment Link di Stripe
            venditore='Cinzia Molisano', email='zombettaegeko@gmail.com', indirizzo='')
 taglie = ['2 anni', '4 anni', '6 anni', '8 anni', '10 anni']
 colori = [('bianco', '#ffffff'), ('celeste', '#a9d4f5'), ('rosa', '#f6a6cf'), ('giallo', '#ffe45c')]
@@ -431,7 +431,7 @@ condizioni = f'''
 if NEGOZIO_ATTIVO: page('condizioni.html', 'Condizioni di vendita – Zombetta e Geko', 'Condizioni di vendita delle magliette di Zombetta e Geko.', condizioni)
 
 PRIV_ORD = ("""<p><b>Ordini:</b> nome, email, indirizzo e dettagli dell'ordine servono solo a gestire l'acquisto e la spedizione (base giuridica: esecuzione del contratto) e a rispettare gli obblighi fiscali (obbligo di legge). I pagamenti con carta sono gestiti da Stripe, che tratta i dati di pagamento come titolare autonomo.</p>""" if NEGOZIO_ATTIVO else '<p><b>Ordini e prenotazioni:</b> se compili il modulo d\'ordine o ci scrivi via email o su Instagram, usiamo nome e cognome, email, cellulare, indirizzo, il Locker o Point InPost scelto e i dettagli dell\'ordine solo per risponderti, gestire l\'ordine e spedire (base giuridica: esecuzione del contratto e misure precontrattuali richieste da te). Li cancelliamo quando non servono più, o prima se ce lo chiedi.</p>')
-PRIV_DEST = ('<h2>A chi vengono comunicati</h2>\n<p>Netlify (ricezione dei moduli e hosting), Stripe (pagamenti con carta), InPost (spedizione: nome, cellulare ed email per la consegna al Locker). I dati non vengono venduti né usati per pubblicità.</p>\n<h2>Quanto vengono conservati</h2>\n<p>Per il tempo necessario a gestire l\'ordine e, per i dati richiesti dalla legge fiscale, per 10 anni.</p>' if NEGOZIO_ATTIVO else '<h2>A chi vengono comunicati</h2>\n<p>Il sito è ospitato da Netlify, che tratta i dati tecnici di navigazione e riceve per nostro conto i moduli di prenotazione. Per le spedizioni comunichiamo a InPost nome, cellulare, email, indirizzo e il Locker o Point di consegna. I dati non vengono venduti né usati per pubblicità.</p>')
+PRIV_DEST = ('<h2>A chi vengono comunicati</h2>\n<p>Netlify (ricezione dei moduli e hosting), Stripe (pagamenti con carta), InPost (spedizione: nome, cellulare ed email per la consegna al Locker). I dati non vengono venduti né usati per pubblicità.</p>\n<h2>Quanto vengono conservati</h2>\n<p>Per il tempo necessario a gestire l\'ordine e, per i dati richiesti dalla legge fiscale, per 10 anni.</p>' if NEGOZIO_ATTIVO else '<h2>A chi vengono comunicati</h2>\n<p>Il sito è ospitato da Netlify, che tratta i dati tecnici di navigazione e riceve per nostro conto i moduli di prenotazione. Per le spedizioni comunichiamo al corriere (InPost o Poste Italiane) nome, cellulare, email, indirizzo e il Locker o Point di consegna. I dati non vengono venduti né usati per pubblicità.</p>')
 privacy = f'''
 <section class="sez legale"><div class="wrap" style="max-width:820px">
 <h1>Informativa privacy</h1>
@@ -482,28 +482,30 @@ if not NEGOZIO_ATTIVO:
 <section class="sez lilla" id="ordina"><div class="wrap" style="max-width:820px">
   <div class="titolo-sez"><h2>Ordina la sacca</h2>
     <p>Compila il modulo: ti scriviamo noi via email con il totale e come pagare. La sacca parte appena arriva il pagamento.</p>
-    <p>Spedizione in Italia con InPost {NEG["spedizione"]} €: <b>una sola spedizione fino a 3 sacche</b>. Ritiro a mano gratis.</p></div>
+    <p>Spedizione in Italia: <b>InPost</b> a un Locker o Point {NEG["spedizione"]} € oppure <b>a casa</b> con Poste Italiane {NEG["spedizione_casa"]} €. <b>Una sola spedizione fino a 3 sacche</b>. Ritiro a mano gratis.</p></div>
   <form class="modulo" name="prenotazione" method="POST" action="/grazie.html" data-netlify="true" netlify-honeypot="campo-esca" id="form-pren">
     <input type="hidden" name="form-name" value="prenotazione">
     <p hidden><label>Non compilare: <input name="campo-esca"></label></p>
     <textarea name="riepilogo" hidden></textarea>
     <div class="due">
       <label>Quantità<input type="number" name="quantita" min="1" max="10" value="1"></label>
-      <label>Consegna<select name="consegna"><option>Spedizione InPost</option><option>Ritiro a mano</option></select></label>
+      <label>Consegna<select name="consegna"><option>InPost a un Locker o Point ({NEG["spedizione"]} €)</option><option>A casa con Poste Italiane ({NEG["spedizione_casa"]} €)</option><option>Ritiro a mano (gratis)</option></select></label>
     </div>
     <div class="due">
       <label>Nome e cognome<input name="nome" required autocomplete="name"></label>
       <label>Email<input type="email" name="email" required autocomplete="email"></label>
     </div>
-    <label>Cellulare<input type="tel" name="cellulare" required autocomplete="tel" inputmode="tel" placeholder="Per l’SMS di InPost"></label>
+    <label>Cellulare<input type="tel" name="cellulare" required autocomplete="tel" inputmode="tel" placeholder="Per gli avvisi del corriere"></label>
     <fieldset id="dati-inpost" style="border:0;padding:0;margin:0;display:grid;gap:16px">
       <label>Indirizzo (via e numero civico)<input name="indirizzo" autocomplete="street-address" data-inpost></label>
       <div class="due">
         <label>Città<input name="citta" autocomplete="address-level2" data-inpost></label>
         <label>CAP e provincia<input name="cap" autocomplete="postal-code" placeholder="es. 24121 BG" data-inpost></label>
       </div>
+      <div id="dati-locker" style="display:grid;gap:16px">
       <label>Locker o Point InPost preferito (facoltativo)<input name="locker" placeholder="Codice o indirizzo, es. MIL123M o Via Roma 1"></label>
       <p style="margin:-8px 0 0;font-size:.9em">Trovalo sulla <a href="https://inpost.it/en/find-location" target="_blank" rel="noopener">mappa InPost</a>. Se non lo sai, lo scegliamo noi vicino al tuo indirizzo.</p>
+      </div>
     </fieldset>
     <label>Note (facoltativo)<textarea name="note" rows="2"></textarea></label>
     <label class="check"><input type="checkbox" name="avvisami_magliette" value="sì"> <span>Avvisatemi anche quando arrivano le magliette</span></label>
@@ -525,22 +527,23 @@ if not NEGOZIO_ATTIVO:
 
     PREN_JS = """<script>
 {
-const PS = %s, SP = %s;
+const PS = %s, SP = %s, SPC = %s;
 const form = document.getElementById('form-pren');
 function calcola() {
   const q = Math.max(1, parseInt(form.quantita.value) || 1);
-  const nsp = form.consegna.selectedIndex === 0 ? Math.ceil(q / 3) : 0;
-  const tot = q * PS + nsp * SP;
-  const inpost = nsp > 0, box = document.getElementById('dati-inpost');
-  box.hidden = !inpost; box.style.display = inpost ? 'grid' : 'none';
-  box.querySelectorAll('[data-inpost]').forEach(el => el.required = inpost);
+  const tipo = form.consegna.selectedIndex, nsp = tipo < 2 ? Math.ceil(q / 3) : 0;
+  const tot = q * PS + nsp * (tipo === 0 ? SP : SPC);
+  const sped = nsp > 0, box = document.getElementById('dati-inpost'), lk = document.getElementById('dati-locker');
+  box.hidden = !sped; box.style.display = sped ? 'grid' : 'none';
+  lk.style.display = tipo === 0 ? 'grid' : 'none';
+  box.querySelectorAll('[data-inpost]').forEach(el => el.required = sped);
   const totTxt = tot.toFixed(2).replace('.', ',') + ' €';
   form.riepilogo.value = 'Sacca · quantità ' + q + '\\nConsegna: ' + form.consegna.value + '\\nTotale: ' + totTxt + (form.avvisami_magliette.checked ? '\\nAvvisare per le magliette' : '');
   document.getElementById('totale').textContent = totTxt + (nsp ? ' (con ' + (nsp > 1 ? nsp + ' spedizioni' : 'la spedizione') + ')' : '');
 }
 form.addEventListener('input', calcola); form.addEventListener('change', calcola); form.addEventListener('submit', calcola); calcola();
 }
-</script>""" % (NEG["prezzo_sacca"].replace(",", "."), NEG["spedizione"].replace(",", "."))
+</script>""" % (NEG["prezzo_sacca"].replace(",", "."), NEG["spedizione"].replace(",", "."), NEG["spedizione_casa"].replace(",", "."))
     page('negozio.html', 'Shop – Zombetta e Geko', 'La sacca del Club degli amici di Zombetta e, in arrivo, le magliette di Zombetta e Geko.', pren_html, PREN_JS)
 
 # ------------------------------------------------------------------ GIOCHI
