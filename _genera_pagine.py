@@ -7,6 +7,8 @@ SITE = 'https://zombettaegeko.it'
 # Negozio: False = solo prenotazioni via email/Instagram; True = Stripe + modulo + condizioni di vendita
 NEGOZIO_ATTIVO = False
 EMAIL = 'zombettaegeko@gmail.com'
+WA = 'https://wa.me/393717423603'
+WA_NUM = '+39&nbsp;371&nbsp;742&nbsp;3603'
 COND_LINK = '· <a href="condizioni.html">Condizioni di vendita</a> ' if NEGOZIO_ATTIVO else ''
 
 YT = 'https://www.youtube.com/@ZombettaGeko'
@@ -68,6 +70,13 @@ def page(fname, title, desc, body, extra_js=''):
     <div>
       <h3>L'autrice</h3>
       <p>Le storie di Zombetta e Geko sono di Cinzia Molisano.<br><a href="https://cinziamolisano.it" rel="noopener">cinziamolisano.it</a></p>
+    </div>
+    <div>
+      <h3>Contatti</h3>
+      <ul>
+        <li><a href="{WA}" rel="noopener">WhatsApp</a> · {WA_NUM}</li>
+        <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
+      </ul>
     </div>
     <p class="piccolo">© <span class="anno">2026</span> Cinzia Molisano · Zombetta e Geko · Questo sito non usa cookie. {COND_LINK}· <a href="mailto:{EMAIL}">{EMAIL}</a> · <a href="privacy.html">Privacy</a></p>
   </div>
@@ -195,7 +204,7 @@ home = f'''
     <div class="avviso">
       <h2>Per maestre e biblioteche</h2>
       <p>Le avventure di Zombetta e Geko nascono per essere lette insieme: in classe, in biblioteca, prima della nanna. Cinzia incontra i bambini con un'indagine vera sulla valigia di Zombetta: indizi da esaminare, teorie da confrontare e un reperto da lasciare nella valigia.</p>
-      <a class="btn" href="{IG}" rel="noopener">Scrivici per un incontro</a>
+      <a class="btn" href="{WA}" rel="noopener">Scrivici per un incontro</a>
     </div>
   </div>
 </section>
@@ -291,7 +300,7 @@ page('canzone.html', 'La canzone di Zombetta e Geko – con testo', 'La canzone 
 
 # ------------------------------------------------------------------ NEGOZIO
 # Dati del negozio: completare prima della pubblicazione
-NEG = dict(prezzo='6,00', prezzo_sacca='4,00', spedizione='4,99', spedizione_casa='7,10', stripe='https://buy.stripe.com/9B68wP8tjdfOc9KcligIo00',   # link Payment Link di Stripe
+NEG = dict(prezzo='6,00', prezzo_sacca='4,00', spedizione='4,99', spedizione_casa='7,10', prezzo_libro='8,00', stripe='https://buy.stripe.com/9B68wP8tjdfOc9KcligIo00',   # link Payment Link di Stripe
            venditore='Cinzia Molisano', email='zombettaegeko@gmail.com', indirizzo='')
 taglie = ['2 anni', '4 anni', '6 anni', '8 anni', '10 anni']
 colori = [('bianco', '#ffffff'), ('celeste', '#a9d4f5'), ('rosa', '#f6a6cf'), ('giallo', '#ffe45c')]
@@ -472,7 +481,7 @@ if not NEGOZIO_ATTIVO:
     pren_html = f'''
 <section class="pagina-testa"><div class="wrap">
   <h1>Shop</h1>
-  <p>Le magliette e la sacca del <b>Club degli amici di Zombetta</b>, stampate a mano una per una.</p>
+  <p>Le magliette e la sacca del <b>Club degli amici di Zombetta</b>, stampate a mano una per una, e il libro con tutte le avventure.</p>
 </div></section>
 <section class="sez" style="padding-top:30px"><div class="wrap">
   <div class="titolo-sez"><span class="etichetta">Disponibile</span><h2>Le magliette del Club</h2>
@@ -484,6 +493,18 @@ if not NEGOZIO_ATTIVO:
     <img src="img/maglie-bianco.webp" alt="Le magliette del Club in bianco" loading="lazy" style="width:100%;border-radius:18px">
   </div>
   <p style="text-align:center;margin-top:24px"><a class="btn rosa" href="#ordina">Ordina</a></p>
+</div></section>
+<section class="sez" style="padding-top:10px"><div class="wrap">
+  <div class="griglia g2" style="align-items:center;gap:36px">
+    <img src="img/libro5.webp" alt="Copertina de L'avventura completa, volumi 1-4" loading="lazy" style="max-width:300px;width:100%;margin:0 auto;display:block;border-radius:14px;box-shadow:var(--ombra);transform:rotate(-2deg)">
+    <div>
+      <span class="etichetta">Disponibile</span>
+      <h2 style="margin:10px 0">Il libro: L'avventura completa</h2>
+      <p>Tutti e quattro i volumi di <b>Le avventure di Zombetta e Geko</b> in un unico libro illustrato a colori, 200 pagine e 28 capitoli. Ordinandolo qui lo ricevi insieme alle magliette e alla sacca, e su richiesta con la <b>dedica dell'autrice</b>.</p>
+      <p class="prezzo" style="margin:12px 0">{NEG["prezzo_libro"]} €</p>
+      <a class="btn rosa" href="#ordina">Ordina</a>
+    </div>
+  </div>
 </div></section>
 <section class="sez" style="padding-top:10px"><div class="wrap">
   <div class="griglia g2" style="align-items:center;gap:36px">
@@ -512,7 +533,12 @@ if not NEGOZIO_ATTIVO:
     <button type="button" class="btn piccolo bianco" id="aggiungi">+ Aggiungi un'altra maglietta</button>
     <div class="due">
       <label>Sacche ({NEG["prezzo_sacca"]} €)<input type="number" name="sacche" min="0" max="10" value="0"></label>
+      <label>Libri – L'avventura completa ({NEG["prezzo_libro"]} €)<input type="number" name="libri" min="0" max="10" value="0"></label>
+    </div>
+    <label class="check"><input type="checkbox" name="dedica" value="sì"> <span>Vorrei la dedica dell'autrice sul libro (scrivi nelle note a chi)</span></label>
+    <div class="due">
       <label>Consegna<select name="consegna"><option>InPost a un Locker o Point ({NEG["spedizione"]} €)</option><option>A casa con Poste Italiane ({NEG["spedizione_casa"]} €)</option><option>Ritiro a mano (gratis)</option></select></label>
+      <span></span>
     </div>
     <div class="due">
       <label>Nome e cognome<input name="nome" required autocomplete="name"></label>
@@ -532,17 +558,17 @@ if not NEGOZIO_ATTIVO:
     </fieldset>
     <label>Note (facoltativo)<textarea name="note" rows="2"></textarea></label>
     <p class="totale">Totale: <b id="totale">–</b></p>
-    <p id="avviso-vuoto" style="margin:-6px 0 0;color:#c0392b;display:none">Scegli almeno una maglietta o una sacca.</p>
+    <p id="avviso-vuoto" style="margin:-6px 0 0;color:#c0392b;display:none">Scegli almeno un articolo.</p>
     <label class="check"><input type="checkbox" required> <span>Ho letto l'<a href="privacy.html">informativa privacy</a>.</span></label>
     <button class="btn rosa" type="submit">Invia l'ordine</button>
   </form>
-  <p style="text-align:center;margin-top:22px">Preferisci scriverci? <a href="mailto:{EMAIL}?subject={oggetto.replace(' ', '%20')}&body={corpo.replace(' ', '%20')}">{EMAIL}</a> · <a href="{IG}" rel="noopener">Instagram</a></p>
+  <p style="text-align:center;margin-top:22px">Preferisci scriverci? <a href="mailto:{EMAIL}?subject={oggetto.replace(' ', '%20')}&body={corpo.replace(' ', '%20')}">{EMAIL}</a> · <a href="{WA}" rel="noopener">WhatsApp {WA_NUM}</a> · <a href="{IG}" rel="noopener">Instagram</a></p>
 </div></section>
 '''
 
     PREN_JS = """<script>
 {
-const PM = %s, PS = %s, SP = %s, SPC = %s;
+const PM = %s, PS = %s, PL = %s, SP = %s, SPC = %s;
 const form = document.getElementById('form-pren'), righe = document.getElementById('righe');
 let n = 1;
 document.getElementById('aggiungi').addEventListener('click', () => {
@@ -554,8 +580,9 @@ function calcola() {
   let qm = 0; const voci = [];
   righe.querySelectorAll('.riga').forEach(r => { const q = Math.max(0, parseInt(r.querySelector('[name^=quantita]').value) || 0); if (q) { qm += q; voci.push('Maglietta · retro ' + r.querySelector('[name^=retro]').value + ' · colore ' + r.querySelector('[name^=colore]').value + ' · taglia ' + r.querySelector('[name^=taglia]').value + ' · quantità ' + q); } });
   const qs = Math.max(0, parseInt(form.sacche.value) || 0); if (qs) voci.push('Sacca · quantità ' + qs);
-  const pezzi = qm + qs, tipo = form.consegna.selectedIndex, nsp = tipo < 2 && pezzi ? Math.ceil(pezzi / 3) : 0;
-  const tot = qm * PM + qs * PS + nsp * (tipo === 0 ? SP : SPC);
+  const ql = Math.max(0, parseInt(form.libri.value) || 0); if (ql) voci.push("Libro L'avventura completa · quantità " + ql + (form.dedica.checked ? ' · con dedica' : ''));
+  const pezzi = qm + qs + ql, tipo = form.consegna.selectedIndex, nsp = tipo < 2 && pezzi ? Math.ceil(pezzi / 3) : 0;
+  const tot = qm * PM + qs * PS + ql * PL + nsp * (tipo === 0 ? SP : SPC);
   const sped = tipo < 2, box = document.getElementById('dati-inpost'), lk = document.getElementById('dati-locker');
   box.hidden = !sped; box.style.display = sped ? 'grid' : 'none';
   lk.style.display = tipo === 0 ? 'grid' : 'none';
@@ -569,8 +596,8 @@ form.addEventListener('input', calcola); form.addEventListener('change', calcola
 form.addEventListener('submit', e => { const ok = calcola() > 0; document.getElementById('avviso-vuoto').style.display = ok ? 'none' : 'block'; if (!ok) e.preventDefault(); });
 calcola();
 }
-</script>""" % (NEG["prezzo"].replace(",", "."), NEG["prezzo_sacca"].replace(",", "."), NEG["spedizione"].replace(",", "."), NEG["spedizione_casa"].replace(",", "."))
-    page('negozio.html', 'Shop – Zombetta e Geko', 'Le magliette e la sacca del Club degli amici di Zombetta: ordina online, spedizione InPost o a casa.', pren_html, PREN_JS)
+</script>""" % (NEG["prezzo"].replace(",", "."), NEG["prezzo_sacca"].replace(",", "."), NEG["prezzo_libro"].replace(",", "."), NEG["spedizione"].replace(",", "."), NEG["spedizione_casa"].replace(",", "."))
+    page('negozio.html', 'Shop – Zombetta e Geko', 'Le magliette, la sacca e il libro di Zombetta e Geko: ordina online, spedizione InPost o a casa.', pren_html, PREN_JS)
 
 
 # ------------------------------------------------------------------ GIOCHI
