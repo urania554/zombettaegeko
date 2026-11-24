@@ -454,20 +454,38 @@ page('privacy.html', 'Privacy – Zombetta e Geko', 'Informativa privacy del sit
 
 
 if not NEGOZIO_ATTIVO:
-    magliette = [
-        ('club.webp', 'Maglietta del Club', 'Davanti il bollino del <b>Club degli amici di Zombetta</b>, sul lato del cuore. Dietro a scelta le tappe del <b>giro del mondo</b> oppure <b>Zombetta e Geko</b>. 100% cotone, 2–10 anni, in bianco, celeste, rosa e giallo.'),
-        ('giro-retro.webp', 'Il retro "giro del mondo"', 'Come una vera maglietta da tour: Borgoquieto, Venezia, Tokyo e Roma, ogni città un timbro, ogni timbro un libro.'),
-        ('giro-fronte.webp', 'Il retro "Zombetta e Geko"', 'Zombetta e Geko insieme, pronti a partire per una nuova avventura: per chi vuole i due amici sempre con sé.'),
+    foto_m = [
+        ('maglia-celeste-retro-zombetta.webp', 'Retro "Zombetta e Geko"', 'Il logo e Zombetta con Geko sulla spalla, con la scritta "Il giro del mondo · Tour 2026".'),
+        ('maglia-celeste-retro-giro.webp', 'Retro "Il giro del mondo"', 'Come una vera maglietta da tour: Borgoquieto, Venezia, Tokyo e Roma, unite dalle stelline.'),
+        ('maglia-celeste-fronte.webp', 'Davanti', 'Il bollino del Club degli amici di Zombetta, sul lato del cuore.'),
+        ('maglia-rosa-retro-giro.webp', 'Anche in rosa', 'Ogni maglietta si sceglie in bianco, celeste, rosa o giallo.'),
     ]
-    oggetto = 'Ordine sacca Zombetta e Geko'
-    corpo = 'Ciao! Vorrei ordinare:%0A- sacca, quantità:%0ANome e cognome:%0ACellulare:%0AIndirizzo, città e CAP:%0ALocker InPost (se lo sai):%0A'
-    card = lambda i, t, d, et, cl: f'<article class="card prodotto"><div class="foto"><img src="img/{i}" alt="{t}" loading="lazy"></div><div class="corpo"><span class="etichetta {cl}">{et}</span><h3>{t}</h3><p>{d}</p></div></article>'
+    oggetto = 'Ordine Zombetta e Geko'
+    corpo = 'Ciao! Vorrei ordinare:%0A- magliette (retro, colore, taglia, quantità):%0A- sacche, quantità:%0ANome e cognome:%0ACellulare:%0AIndirizzo, città e CAP:%0ALocker InPost (se lo sai):%0A'
+    fcard = lambda i, t, d: f'<article class="card prodotto"><div class="foto"><img src="img/{i}" alt="Maglietta del Club: {t}" loading="lazy"></div><div class="corpo"><h3>{t}</h3><p>{d}</p></div></article>'
+    riga_m = lambda n: f'''<div class="riga" data-riga="{n}">
+        <label>Retro<select name="retro_{n}"><option>Zombetta e Geko</option><option>Il giro del mondo</option></select></label>
+        <label>Colore<select name="colore_{n}">{opts([c for c, _ in colori])}</select></label>
+        <label>Taglia<select name="taglia_{n}">{opts(taglie)}</select></label>
+        <label>Quantità<input type="number" name="quantita_{n}" min="0" max="10" value="1"></label>
+      </div>'''
     pren_html = f'''
 <section class="pagina-testa"><div class="wrap">
   <h1>Shop</h1>
-  <p>Le cose del <b>Club degli amici di Zombetta</b>. Adesso c'è la sacca, le magliette arrivano presto!</p>
+  <p>Le magliette e la sacca del <b>Club degli amici di Zombetta</b>, stampate a mano una per una.</p>
 </div></section>
 <section class="sez" style="padding-top:30px"><div class="wrap">
+  <div class="titolo-sez"><span class="etichetta">Disponibile</span><h2>Le magliette del Club</h2>
+    <p>Davanti il bollino del <b>Club degli amici di Zombetta</b>; dietro a scelta <b>Zombetta e Geko</b> oppure <b>Il giro del mondo</b>. 100% cotone, taglie da 2 a 10 anni, in bianco, celeste, rosa e giallo.</p>
+    <p class="prezzo">{NEG["prezzo"]} € a maglietta</p></div>
+  <img src="img/maglie-rosa-celeste.webp" alt="Le magliette del Club in rosa e celeste: retro Il giro del mondo, retro Zombetta e Geko e il bollino del Club sul davanti" style="max-width:640px;width:100%;margin:0 auto;display:block;border-radius:18px">
+  <div class="griglia g2" style="max-width:860px;margin:22px auto 0;gap:22px">
+    <img src="img/maglie-giallo.webp" alt="Le magliette del Club in giallo" loading="lazy" style="width:100%;border-radius:18px">
+    <img src="img/maglie-bianco.webp" alt="Le magliette del Club in bianco" loading="lazy" style="width:100%;border-radius:18px">
+  </div>
+  <p style="text-align:center;margin-top:24px"><a class="btn rosa" href="#ordina">Ordina</a></p>
+</div></section>
+<section class="sez" style="padding-top:10px"><div class="wrap">
   <div class="griglia g2" style="align-items:center;gap:36px">
     <img src="img/sacca-nera.webp" alt="La sacca nera del Club con la scritta Il giro del mondo di Zombetta e Geko e il bollino del Club" style="border-radius:18px;width:100%">
     <div>
@@ -475,20 +493,25 @@ if not NEGOZIO_ATTIVO:
       <h2 style="margin:10px 0">La sacca del Club</h2>
       <p>La sacca zainetto in <b>cotone riciclato nero</b>, con i cordini, per la scuola, la palestra o il viaggio. Davanti la scritta <b>"Il giro del mondo di Zombetta e Geko"</b> e il bollino del <b>Club degli amici di Zombetta</b>.</p>
       <p class="prezzo" style="margin:12px 0">{NEG["prezzo_sacca"]} €</p>
-      <a class="btn rosa" href="#ordina">Ordina la sacca</a>
+      <a class="btn rosa" href="#ordina">Ordina</a>
     </div>
   </div>
 </div></section>
 <section class="sez lilla" id="ordina"><div class="wrap" style="max-width:820px">
-  <div class="titolo-sez"><h2>Ordina la sacca</h2>
-    <p>Compila il modulo: ti scriviamo noi via email con il totale e come pagare. La sacca parte appena arriva il pagamento.</p>
-    <p>Spedizione in Italia: <b>InPost</b> a un Locker o Point {NEG["spedizione"]} € oppure <b>a casa</b> con Poste Italiane {NEG["spedizione_casa"]} €. <b>Una sola spedizione fino a 3 sacche</b>. Ritiro a mano gratis.</p></div>
+  <div class="titolo-sez"><h2>Ordina</h2>
+    <p>Compila il modulo: ti scriviamo noi via email con il totale e come pagare. Il pacco parte appena arriva il pagamento.</p>
+    <p>Spedizione in Italia: <b>InPost</b> a un Locker o Point {NEG["spedizione"]} € oppure <b>a casa</b> con Poste Italiane {NEG["spedizione_casa"]} €. <b>Una sola spedizione fino a 3 articoli</b>. Ritiro a mano gratis.</p></div>
   <form class="modulo" name="prenotazione" method="POST" action="/grazie.html" data-netlify="true" netlify-honeypot="campo-esca" id="form-pren">
     <input type="hidden" name="form-name" value="prenotazione">
     <p hidden><label>Non compilare: <input name="campo-esca"></label></p>
     <textarea name="riepilogo" hidden></textarea>
+    <p style="margin:0;font-weight:700">Magliette ({NEG["prezzo"]} €)</p>
+    <div id="righe">
+      {riga_m(1)}
+    </div>
+    <button type="button" class="btn piccolo bianco" id="aggiungi">+ Aggiungi un'altra maglietta</button>
     <div class="due">
-      <label>Quantità<input type="number" name="quantita" min="1" max="10" value="1"></label>
+      <label>Sacche ({NEG["prezzo_sacca"]} €)<input type="number" name="sacche" min="0" max="10" value="0"></label>
       <label>Consegna<select name="consegna"><option>InPost a un Locker o Point ({NEG["spedizione"]} €)</option><option>A casa con Poste Italiane ({NEG["spedizione_casa"]} €)</option><option>Ritiro a mano (gratis)</option></select></label>
     </div>
     <div class="due">
@@ -508,43 +531,47 @@ if not NEGOZIO_ATTIVO:
       </div>
     </fieldset>
     <label>Note (facoltativo)<textarea name="note" rows="2"></textarea></label>
-    <label class="check"><input type="checkbox" name="avvisami_magliette" value="sì"> <span>Avvisatemi anche quando arrivano le magliette</span></label>
     <p class="totale">Totale: <b id="totale">–</b></p>
+    <p id="avviso-vuoto" style="margin:-6px 0 0;color:#c0392b;display:none">Scegli almeno una maglietta o una sacca.</p>
     <label class="check"><input type="checkbox" required> <span>Ho letto l'<a href="privacy.html">informativa privacy</a>.</span></label>
     <button class="btn rosa" type="submit">Invia l'ordine</button>
   </form>
   <p style="text-align:center;margin-top:22px">Preferisci scriverci? <a href="mailto:{EMAIL}?subject={oggetto.replace(' ', '%20')}&body={corpo.replace(' ', '%20')}">{EMAIL}</a> · <a href="{IG}" rel="noopener">Instagram</a></p>
 </div></section>
-<section class="sez"><div class="wrap">
-  <div class="titolo-sez"><h2>In arrivo: le magliette del Club</h2>
-    <p>Stiamo preparando la prima edizione delle magliette. Vuoi saperlo appena sono pronte? Spunta "avvisatemi" nel modulo qui sopra o scrivici.</p></div>
-  <div class="griglia g3">
-    {''.join(card(i, t, d, 'In arrivo', 'presto') for i, t, d in magliette)}
-  </div>
-  <img src="img/magliette-colori.webp" alt="Le magliette nei quattro colori, con il bollino sul cuore" loading="lazy" style="max-width:720px;margin:40px auto 0;border-radius:18px">
-</div></section>
 '''
 
     PREN_JS = """<script>
 {
-const PS = %s, SP = %s, SPC = %s;
-const form = document.getElementById('form-pren');
+const PM = %s, PS = %s, SP = %s, SPC = %s;
+const form = document.getElementById('form-pren'), righe = document.getElementById('righe');
+let n = 1;
+document.getElementById('aggiungi').addEventListener('click', () => {
+  n++; const r = righe.querySelector('.riga').cloneNode(true); r.dataset.riga = n;
+  r.querySelectorAll('[name]').forEach(el => { el.name = el.name.replace(/_\\d+$/, '_' + n); if (el.type === 'number') el.value = 1; });
+  righe.appendChild(r); calcola();
+});
 function calcola() {
-  const q = Math.max(1, parseInt(form.quantita.value) || 1);
-  const tipo = form.consegna.selectedIndex, nsp = tipo < 2 ? Math.ceil(q / 3) : 0;
-  const tot = q * PS + nsp * (tipo === 0 ? SP : SPC);
-  const sped = nsp > 0, box = document.getElementById('dati-inpost'), lk = document.getElementById('dati-locker');
+  let qm = 0; const voci = [];
+  righe.querySelectorAll('.riga').forEach(r => { const q = Math.max(0, parseInt(r.querySelector('[name^=quantita]').value) || 0); if (q) { qm += q; voci.push('Maglietta · retro ' + r.querySelector('[name^=retro]').value + ' · colore ' + r.querySelector('[name^=colore]').value + ' · taglia ' + r.querySelector('[name^=taglia]').value + ' · quantità ' + q); } });
+  const qs = Math.max(0, parseInt(form.sacche.value) || 0); if (qs) voci.push('Sacca · quantità ' + qs);
+  const pezzi = qm + qs, tipo = form.consegna.selectedIndex, nsp = tipo < 2 && pezzi ? Math.ceil(pezzi / 3) : 0;
+  const tot = qm * PM + qs * PS + nsp * (tipo === 0 ? SP : SPC);
+  const sped = tipo < 2, box = document.getElementById('dati-inpost'), lk = document.getElementById('dati-locker');
   box.hidden = !sped; box.style.display = sped ? 'grid' : 'none';
   lk.style.display = tipo === 0 ? 'grid' : 'none';
   box.querySelectorAll('[data-inpost]').forEach(el => el.required = sped);
   const totTxt = tot.toFixed(2).replace('.', ',') + ' €';
-  form.riepilogo.value = 'Sacca · quantità ' + q + '\\nConsegna: ' + form.consegna.value + '\\nTotale: ' + totTxt + (form.avvisami_magliette.checked ? '\\nAvvisare per le magliette' : '');
-  document.getElementById('totale').textContent = totTxt + (nsp ? ' (con ' + (nsp > 1 ? nsp + ' spedizioni' : 'la spedizione') + ')' : '');
+  form.riepilogo.value = voci.join('\\n') + '\\nConsegna: ' + form.consegna.value + '\\nTotale: ' + totTxt;
+  document.getElementById('totale').textContent = pezzi ? totTxt + (nsp ? ' (con ' + (nsp > 1 ? nsp + ' spedizioni' : 'la spedizione') + ')' : '') : '–';
+  return pezzi;
 }
-form.addEventListener('input', calcola); form.addEventListener('change', calcola); form.addEventListener('submit', calcola); calcola();
+form.addEventListener('input', calcola); form.addEventListener('change', calcola);
+form.addEventListener('submit', e => { const ok = calcola() > 0; document.getElementById('avviso-vuoto').style.display = ok ? 'none' : 'block'; if (!ok) e.preventDefault(); });
+calcola();
 }
-</script>""" % (NEG["prezzo_sacca"].replace(",", "."), NEG["spedizione"].replace(",", "."), NEG["spedizione_casa"].replace(",", "."))
-    page('negozio.html', 'Shop – Zombetta e Geko', 'La sacca del Club degli amici di Zombetta e, in arrivo, le magliette di Zombetta e Geko.', pren_html, PREN_JS)
+</script>""" % (NEG["prezzo"].replace(",", "."), NEG["prezzo_sacca"].replace(",", "."), NEG["spedizione"].replace(",", "."), NEG["spedizione_casa"].replace(",", "."))
+    page('negozio.html', 'Shop – Zombetta e Geko', 'Le magliette e la sacca del Club degli amici di Zombetta: ordina online, spedizione InPost o a casa.', pren_html, PREN_JS)
+
 
 # ------------------------------------------------------------------ GIOCHI
 giochi = '''
